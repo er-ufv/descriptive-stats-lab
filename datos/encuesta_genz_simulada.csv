@@ -1,0 +1,121 @@
+id,sexo,relacion_preferida,tiene_pareja,red_favorita,genero_musical,hace_previa,estudia_y_trabaja,ansiedad_examenes,horas_movil_dia,horas_sueno,gasto_festivales,nota_pau,minutos_trayecto,cafes_semana,horas_gaming_sem
+P001,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,No,No,Bastante,4.6,7.8,15,10.9,96,2,5
+P002,Mujer,Pareja monógama,No,YouTube,Indie,Sí,No,Poco,3.3,8.3,162,12.26,25,5,0
+P003,Mujer,Pareja monógama,Sí,WhatsApp,Urbano/reguetón,No,No,Bastante,2.1,7.3,168,9.24,25,3,0
+P004,Hombre,Ahora no quiero pareja,No,Instagram,Urbano/reguetón,No,No,Nada,2.1,8.5,56,11.82,31,4,19
+P005,Mujer,Pareja monógama,Sí,X/Twitter,Urbano/reguetón,Sí,No,Nada,1.9,8.2,132,9.46,68,4,4
+P006,Otro / prefiere no decirlo,Pareja monógama,Sí,X/Twitter,Urbano/reguetón,Sí,No,Poco,2.5,8.2,20,12.5,99,3,10
+P007,Mujer,Pareja monógama,No,Instagram,Urbano/reguetón,No,No,Mucho,3.3,8,45,12.66,34,3,15
+P008,Mujer,Pareja monógama,No,WhatsApp,Rap/trap,No,No,Nada,4.5,6.9,134,10.06,54,6,0
+P009,Mujer,Ahora no quiero pareja,Sí,Instagram,Pop,Sí,Sí,Mucho,5.1,7.3,125,10.37,42,3,0
+P010,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,Sí,No,Mucho,3.1,7,77,11.92,29,6,0
+P011,Otro / prefiere no decirlo,Pareja monógama,No,TikTok,Urbano/reguetón,Sí,No,Bastante,4.1,6.4,264,13.31,77,3,1
+P012,Mujer,Pareja monógama,Sí,WhatsApp,Rock,Sí,No,Poco,1.1,8.5,72,12.77,100,5,11
+P013,Mujer,Pareja monógama,Sí,TikTok,Indie,No,No,Poco,7.2,6.1,248,13.29,47,6,0
+P014,Mujer,Pareja monógama,No,TikTok,Urbano/reguetón,Sí,No,Mucho,3.8,5.9,382,9.95,30,3,10
+P015,Mujer,Pareja monógama,No,Instagram,Pop,Sí,No,Bastante,6.1,6.9,16,8.21,25,3,1
+P016,Hombre,Pareja monógama,Sí,WhatsApp,Electrónica,Sí,Sí,Mucho,5,7.5,67,13.17,48,6,18
+P017,Mujer,Pareja monógama,Sí,TikTok,Rap/trap,No,No,Bastante,8.5,6.9,412,5.79,55,3,13
+P018,Mujer,Pareja monógama,Sí,WhatsApp,Urbano/reguetón,Sí,No,Bastante,2.6,7.1,379,6.52,55,3,11
+P019,Mujer,Pareja monógama,No,YouTube,K-pop,Sí,Sí,Bastante,2.9,6.7,144,11.78,132,5,4
+P020,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,No,No,Mucho,3.6,7.6,461,13.47,71,5,0
+P021,Mujer,Pareja monógama,Sí,Instagram,Rap/trap,Sí,Sí,Bastante,10.7,6.7,256,11.65,50,4,0
+P022,Mujer,Pareja monógama,Sí,TikTok,Electrónica,No,Sí,Poco,9.3,6.9,135,12.33,46,5,0
+P023,Mujer,Pareja monógama,No,TikTok,Electrónica,No,No,Bastante,0.9,6.9,299,12.12,37,3,14
+P024,Mujer,Pareja monógama,No,YouTube,Electrónica,Sí,No,Mucho,2.8,7.2,31,7.32,40,1,10
+P025,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,Sí,No,Bastante,3.8,7.1,129,8.84,50,4,0
+P026,Hombre,Pareja monógama,No,Instagram,K-pop,No,Sí,Mucho,1.5,7.4,259,5,16,5,0
+P027,Mujer,No lo tengo claro,No,TikTok,Pop,No,No,Bastante,5,6.9,27,12.39,33,5,14
+P028,Mujer,Pareja monógama,No,TikTok,Pop,Sí,Sí,Bastante,7.9,6.8,105,11.56,50,4,0
+P029,Otro / prefiere no decirlo,"Otros modelos (abierta, puntual…)",Sí,WhatsApp,Rap/trap,Sí,No,Mucho,3.2,8.6,94,7.41,33,2,0
+P030,Mujer,Pareja monógama,Sí,Instagram,Rock,Sí,No,Bastante,5.8,5.4,105,13.5,16,2,23
+P031,Mujer,Pareja monógama,Sí,Instagram,Pop,Sí,No,Bastante,9.4,6.5,221,13,23,2,3
+P032,Hombre,Pareja monógama,No,WhatsApp,Indie,Sí,No,Bastante,5.2,6,136,10.63,85,8,0
+P033,Mujer,Pareja monógama,Sí,YouTube,Urbano/reguetón,Sí,Sí,Bastante,6.1,6.5,88,12.16,54,3,16
+P034,Mujer,Pareja monógama,Sí,Instagram,Pop,Sí,No,Poco,4.1,7.3,285,5,26,3,7
+P035,Mujer,Pareja monógama,Sí,WhatsApp,Rock,No,No,Bastante,4.2,7.4,130,9.27,118,3,5
+P036,Mujer,Pareja monógama,Sí,TikTok,Electrónica,Sí,Sí,Bastante,6,6.6,209,7.63,37,4,4
+P037,Mujer,Pareja monógama,Sí,Instagram,Electrónica,Sí,No,Bastante,3.2,7.3,52,11.23,44,3,6
+P038,Mujer,Pareja monógama,Sí,Instagram,Urbano/reguetón,No,No,Nada,3.3,6.5,329,9.55,36,6,0
+P039,Hombre,Pareja monógama,No,Instagram,Rap/trap,Sí,Sí,Bastante,1.5,7.4,89,12.6,20,5,19
+P040,Mujer,Pareja monógama,No,TikTok,K-pop,Sí,No,Bastante,2.2,6,298,12.91,60,0,15
+P041,Mujer,Pareja monógama,Sí,WhatsApp,Urbano/reguetón,Sí,No,Poco,2.7,7,583,11.24,66,3,5
+P042,Mujer,Ahora no quiero pareja,Sí,TikTok,Pop,Sí,No,Bastante,2.1,7.6,163,10.21,57,1,0
+P043,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,Sí,No,Bastante,1.6,7,84,12.71,28,5,7
+P044,Mujer,Ahora no quiero pareja,Sí,Instagram,Pop,Sí,No,Bastante,9.3,5.2,77,7.57,35,3,3
+P045,Mujer,Pareja monógama,No,TikTok,Urbano/reguetón,No,Sí,Nada,3.8,7,381,10.99,22,3,4
+P046,Mujer,No lo tengo claro,Sí,X/Twitter,Pop,Sí,No,Poco,2.1,6,87,10.75,48,6,11
+P047,Mujer,Pareja monógama,Sí,Instagram,K-pop,Sí,Sí,Bastante,1.2,8,33,10.03,32,8,4
+P048,Hombre,Pareja monógama,No,TikTok,K-pop,Sí,No,Poco,2.7,8.4,185,11.44,51,5,0
+P049,Mujer,Pareja monógama,Sí,Instagram,Pop,Sí,Sí,Mucho,4,6.2,28,10.15,27,2,9
+P050,Mujer,Pareja monógama,No,Instagram,Indie,Sí,No,Poco,8.3,5.8,79,12.79,72,0,6
+P051,Hombre,"Otros modelos (abierta, puntual…)",No,TikTok,Urbano/reguetón,Sí,No,Poco,5.2,6.5,147,12.44,75,7,23
+P052,Mujer,Pareja monógama,No,YouTube,Indie,Sí,Sí,Mucho,3.5,6.9,71,12.02,30,4,3
+P053,Hombre,No lo tengo claro,Sí,Instagram,Pop,Sí,Sí,Bastante,4,6.9,104,8.19,27,3,4
+P054,Mujer,"Otros modelos (abierta, puntual…)",Sí,Instagram,Electrónica,Sí,No,Bastante,2.4,6.9,31,12.33,102,6,2
+P055,Mujer,Pareja monógama,Sí,Instagram,K-pop,Sí,No,Mucho,1.3,7.5,31,10.09,40,8,8
+P056,Mujer,Pareja monógama,Sí,WhatsApp,Electrónica,No,No,Bastante,13.4,7.5,66,10.58,34,4,0
+P057,Hombre,Ahora no quiero pareja,Sí,TikTok,Urbano/reguetón,Sí,No,Bastante,5.3,7.8,170,12.49,34,0,10
+P058,Mujer,Ahora no quiero pareja,Sí,WhatsApp,Urbano/reguetón,No,No,Bastante,3.2,8.8,112,10.07,38,12,0
+P059,Mujer,Pareja monógama,No,X/Twitter,Urbano/reguetón,No,No,Mucho,6,7,103,11.1,61,3,2
+P060,Mujer,Pareja monógama,No,TikTok,Indie,No,No,Poco,9.6,5.7,59,11.68,44,9,3
+P061,Hombre,Pareja monógama,No,X/Twitter,Urbano/reguetón,Sí,No,Bastante,1.6,6.5,74,10.97,172,1,13
+P062,Mujer,No lo tengo claro,No,X/Twitter,Urbano/reguetón,Sí,No,Mucho,8.5,6.8,70,8.82,58,2,0
+P063,Hombre,Pareja monógama,Sí,TikTok,Rock,Sí,No,Poco,3.4,7.8,23,8.21,56,1,14
+P064,Mujer,Pareja monógama,Sí,YouTube,Rap/trap,No,No,Poco,3.7,6.7,177,11.5,63,6,0
+P065,Mujer,No lo tengo claro,Sí,TikTok,Pop,Sí,No,Poco,2.3,7.2,271,8.83,41,3,0
+P066,Mujer,Pareja monógama,Sí,Instagram,Urbano/reguetón,Sí,Sí,Bastante,1.5,7.3,136,7.71,27,5,13
+P067,Mujer,Pareja monógama,Sí,X/Twitter,Indie,Sí,No,Mucho,6,7.7,15,9.48,49,3,0
+P068,Hombre,Ahora no quiero pareja,Sí,YouTube,Rock,No,Sí,Bastante,3.9,7.3,183,12.84,80,3,0
+P069,Mujer,Pareja monógama,No,TikTok,Urbano/reguetón,Sí,No,Poco,2,6.5,176,12.58,68,4,0
+P070,Mujer,Pareja monógama,No,WhatsApp,Urbano/reguetón,Sí,No,Bastante,5.1,5.8,269,11.62,54,0,0
+P071,Hombre,Pareja monógama,No,TikTok,Rap/trap,Sí,Sí,Mucho,4.3,6.4,72,12.28,64,1,6
+P072,Hombre,"Otros modelos (abierta, puntual…)",Sí,TikTok,Urbano/reguetón,No,No,Poco,1.4,5.4,65,9.14,96,4,18
+P073,Mujer,Pareja monógama,Sí,Instagram,Rap/trap,No,No,Bastante,1.6,7.3,98,8.42,39,4,8
+P074,Mujer,No lo tengo claro,Sí,Instagram,Rock,Sí,No,Nada,3.6,6.4,89,13.09,38,1,0
+P075,Mujer,Pareja monógama,No,TikTok,K-pop,Sí,No,Bastante,2.4,6.1,69,5,64,3,2
+P076,Mujer,Ahora no quiero pareja,No,TikTok,Rock,Sí,No,Bastante,5.4,6.9,23,11.26,30,4,13
+P077,Mujer,No lo tengo claro,Sí,Instagram,Urbano/reguetón,Sí,Sí,Mucho,4.7,6.6,166,12.33,25,4,11
+P078,Otro / prefiere no decirlo,No lo tengo claro,No,Instagram,Electrónica,Sí,Sí,Mucho,3.3,6.6,251,10.89,38,2,0
+P079,Mujer,"Otros modelos (abierta, puntual…)",Sí,X/Twitter,Indie,No,No,Bastante,6.1,6.1,30,9.01,90,4,3
+P080,Hombre,Pareja monógama,No,X/Twitter,K-pop,Sí,No,Bastante,6.5,7.6,174,11.34,61,3,0
+P081,Mujer,Pareja monógama,No,TikTok,Rap/trap,Sí,No,Mucho,5.5,6.3,133,11.58,36,4,17
+P082,Mujer,Pareja monógama,Sí,TikTok,Indie,No,Sí,Mucho,5.5,7.7,198,10.22,29,4,4
+P083,Mujer,Pareja monógama,No,YouTube,Pop,Sí,No,Poco,6.4,6.8,116,11.37,41,3,11
+P084,Mujer,Pareja monógama,No,WhatsApp,Urbano/reguetón,Sí,Sí,Mucho,2.3,8.2,152,10.76,32,5,10
+P085,Hombre,Pareja monógama,Sí,Instagram,Rap/trap,Sí,Sí,Poco,2.8,6.7,75,13.01,37,3,6
+P086,Mujer,Pareja monógama,Sí,TikTok,Pop,Sí,No,Mucho,2.8,6.4,84,9.44,36,7,2
+P087,Mujer,Pareja monógama,Sí,WhatsApp,Rap/trap,Sí,Sí,Poco,3.1,6.9,100,10.37,36,6,4
+P088,Hombre,Pareja monógama,Sí,Instagram,K-pop,No,No,Poco,2.6,7,94,8.9,64,4,4
+P089,Mujer,"Otros modelos (abierta, puntual…)",Sí,Instagram,Indie,Sí,No,Mucho,2.8,6.6,15,5.32,40,2,0
+P090,Mujer,Pareja monógama,No,YouTube,Urbano/reguetón,Sí,No,Nada,5.5,7.3,139,12.69,31,1,4
+P091,Hombre,Pareja monógama,Sí,TikTok,Pop,Sí,No,Poco,3.9,7.2,539,10.68,82,2,0
+P092,Mujer,Pareja monógama,No,WhatsApp,Urbano/reguetón,Sí,Sí,Bastante,2.3,6.9,803,13.1,84,3,7
+P093,Hombre,Pareja monógama,No,BeReal,Urbano/reguetón,No,No,Nada,0.7,7.5,118,13.41,54,5,2
+P094,Mujer,Pareja monógama,No,YouTube,Indie,No,No,Mucho,4.6,6.3,84,9.98,28,11,11
+P095,Mujer,"Otros modelos (abierta, puntual…)",Sí,TikTok,Urbano/reguetón,Sí,Sí,Bastante,3,8.2,67,9.39,40,1,1
+P096,Mujer,No lo tengo claro,No,X/Twitter,K-pop,No,No,Bastante,1.8,8.1,76,11.38,15,6,2
+P097,Hombre,Pareja monógama,Sí,TikTok,Pop,No,No,Bastante,3.1,8.3,33,11.17,81,3,0
+P098,Mujer,Pareja monógama,Sí,WhatsApp,Urbano/reguetón,No,No,Poco,7.6,5.7,128,12.69,35,2,0
+P099,Mujer,Ahora no quiero pareja,No,Instagram,Rap/trap,Sí,No,Bastante,2.8,6.4,35,10.62,26,1,0
+P100,Mujer,Pareja monógama,No,TikTok,Rap/trap,Sí,No,Nada,2.7,7.4,246,13.35,22,2,0
+P101,Hombre,Pareja monógama,No,Instagram,Urbano/reguetón,Sí,Sí,Mucho,2.6,6.2,111,11.38,44,4,2
+P102,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,No,Sí,Poco,6.7,7.4,58,11.11,41,5,0
+P103,Mujer,"Otros modelos (abierta, puntual…)",Sí,YouTube,Rap/trap,Sí,Sí,Mucho,8,7.3,178,9.17,31,7,7
+P104,Hombre,No lo tengo claro,Sí,WhatsApp,Rap/trap,Sí,No,Poco,4.9,8.2,237,7.83,40,1,5
+P105,Mujer,Ahora no quiero pareja,Sí,TikTok,Urbano/reguetón,Sí,Sí,Mucho,7.5,6.4,501,10.38,59,4,4
+P106,Mujer,Pareja monógama,No,TikTok,Rock,Sí,Sí,Mucho,7,7,176,7.47,71,4,8
+P107,Mujer,Pareja monógama,No,WhatsApp,Urbano/reguetón,Sí,No,Poco,4.8,6.8,132,9.05,44,7,16
+P108,Hombre,No lo tengo claro,No,Instagram,Indie,No,No,Nada,2.6,6.9,220,13.37,16,5,5
+P109,Mujer,Pareja monógama,Sí,TikTok,Urbano/reguetón,Sí,No,Poco,4.4,7.6,208,12.7,36,6,0
+P110,Mujer,Pareja monógama,Sí,WhatsApp,Rap/trap,No,No,Mucho,2.8,7.8,339,11.49,58,5,1
+P111,Mujer,Pareja monógama,No,TikTok,Pop,Sí,No,Poco,3.6,8.6,90,6.79,39,7,16
+P112,Mujer,Pareja monógama,Sí,TikTok,Rock,No,No,Poco,9,5.9,127,8.64,75,4,4
+P113,Mujer,Pareja monógama,No,WhatsApp,Rap/trap,No,No,Bastante,7.6,7.4,22,12.27,22,6,3
+P114,Mujer,Pareja monógama,Sí,TikTok,Pop,Sí,No,Poco,6.6,5.9,102,11.44,41,3,0
+P115,Mujer,Pareja monógama,Sí,Instagram,Urbano/reguetón,No,No,Poco,4.4,6.6,36,12.58,86,0,0
+P116,Mujer,Ahora no quiero pareja,No,Instagram,Indie,Sí,No,Poco,3.8,7.4,818,8.27,56,6,7
+P117,Mujer,Pareja monógama,Sí,Instagram,Rap/trap,Sí,Sí,Mucho,5.8,6.6,50,13.15,113,4,3
+P118,Hombre,Ahora no quiero pareja,Sí,X/Twitter,Rock,Sí,No,Bastante,6.7,6.4,86,6.59,31,3,0
+P119,Hombre,Pareja monógama,No,WhatsApp,Electrónica,Sí,No,Poco,8.1,6.9,414,10.82,58,1,27
+P120,Mujer,Pareja monógama,No,Instagram,Urbano/reguetón,Sí,Sí,Bastante,6.5,5.8,99,9.71,63,6,6

@@ -1,0 +1,1222 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué dicen tus datos? · Estadística descriptiva · UFV</title>
+<style>
+:root{
+  --ufv:#003865; --ufv-2:#0b4f8a; --ufv-claro:#e6eef6; --tinta:#1d2939; --gris:#475467; --borde:#d0d5dd;
+  --ok:#1a7f37; --ok-bg:#e9f7ee; --no:#b42318; --no-bg:#fdecea; --pista:#8a5a00; --pista-bg:#fff6dc;
+  --sol-bg:#eef4fb; --pareja:#5b3fa8; --pareja-bg:#f3effb; --media:#0b4f8a; --mediana:#b45309; --tu:#b42318; --barra:#6f9bcb;
+}
+*{box-sizing:border-box}
+html{font-size:17px}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--tinta);background:#f6f8fb;line-height:1.55}
+header.marca{background:#fff;border-bottom:4px solid var(--ufv)}
+.marca-in{max-width:1000px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.marca img{height:52px;width:auto}
+.marca .asig{color:var(--ufv);font-size:.9rem;line-height:1.3;border-left:2px solid var(--ufv-claro);padding-left:14px}
+.marca .asig strong{display:block;font-size:1rem}
+nav.tabs{background:var(--ufv);position:sticky;top:0;z-index:5}
+.tabs-in{max-width:1000px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:thin}
+.tabs button{flex:0 0 auto;background:none;border:0;color:#d6e2f0;font:inherit;font-size:.9rem;padding:12px 10px;cursor:pointer;border-bottom:4px solid transparent}
+.tabs button[aria-selected=true]{color:#fff;border-bottom-color:#fff;font-weight:700}
+.tabs button:focus-visible,.btn:focus-visible,.pills button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+main{max-width:1000px;margin:0 auto;padding:18px 16px 60px}
+section.mision{display:none}section.mision.activa{display:block}
+h1{font-size:1.6rem;color:var(--ufv);margin:.4em 0}
+h2{font-size:1.35rem;color:var(--ufv);margin:.3em 0 .6em}
+h3{font-size:1.1rem;color:var(--ufv);margin:1em 0 .4em}
+.card{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:16px 18px;margin:14px 0}
+.card>.titulo{font-weight:700;color:var(--ufv);margin-bottom:8px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.pills button{font:inherit;font-size:.9rem;border:1px solid var(--ufv);background:#fff;color:var(--ufv);padding:6px 12px;border-radius:999px;cursor:pointer}
+.pills button[aria-selected=true]{background:var(--ufv);color:#fff}
+.paso{display:none}.paso.activa{display:block}
+.etiqueta{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ufv-2);margin:4px 0 6px}
+.nav-pasos{display:flex;justify-content:space-between;margin-top:16px;gap:8px}
+.btn{font:inherit;font-size:.95rem;border-radius:8px;padding:8px 16px;cursor:pointer;border:1px solid var(--ufv);background:#fff;color:var(--ufv)}
+.btn.prim{background:var(--ufv);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.q{border:1px solid var(--borde);border-radius:10px;padding:14px 16px;margin:14px 0;background:#fbfcfe}
+.q fieldset{border:0;margin:0;padding:0}
+.q legend{font-weight:650;margin-bottom:8px;padding:0}
+.q label.op{display:flex;gap:10px;align-items:flex-start;padding:7px 8px;border-radius:8px;cursor:pointer}
+.q label.op:hover{background:var(--ufv-claro)}
+.q input[type=radio]{margin-top:.35em;accent-color:var(--ufv);width:1.05em;height:1.05em;flex:0 0 auto}
+.q input.numq{font:inherit;width:150px;padding:6px 8px;border:1px solid var(--borde);border-radius:8px}
+.conf{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;margin:10px 0 8px;font-size:.92rem;color:var(--gris)}
+.conf label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.fb{margin-top:10px;padding:10px 12px;border-radius:8px;border-left:6px solid}
+.fb-ok{background:var(--ok-bg);border-color:var(--ok)}
+.fb-no{background:var(--no-bg);border-color:var(--no)}
+.fb-pista{background:var(--pista-bg);border-color:var(--pista)}
+.fb-sol{background:var(--sol-bg);border-color:var(--ufv)}
+.pareja{background:var(--pareja-bg);border-left:6px solid var(--pareja);padding:10px 12px;border-radius:8px;margin:14px 0}
+.resumen{background:var(--ufv-claro);padding:10px 14px;border-radius:8px;margin:14px 0}
+.nota{font-size:.92rem;color:var(--gris);margin:8px 0}
+table.t{border-collapse:collapse;margin:8px 0;font-size:.95rem}
+table.t th,table.t td{padding:5px 10px;text-align:right;border-bottom:1px solid #e4e7ec}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t th{color:var(--ufv);background:#f4f7fb}
+.scroll{overflow-x:auto}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:760px){.grid.dos{grid-template-columns:minmax(220px,1fr) 2fr}}
+.ctrl label{display:block;font-weight:600;margin:8px 0 4px;font-size:.95rem}
+select,input[type=range],textarea{font:inherit;width:100%}
+select,textarea{padding:7px 9px;border:1px solid var(--borde);border-radius:8px;background:#fff}
+input[type=range]{accent-color:var(--ufv)}
+.fila-num{display:flex;flex-wrap:wrap;gap:8px}
+.fila-num label{font-size:.85rem;color:var(--gris);display:flex;flex-direction:column}
+.fila-num input{width:80px;font:inherit;padding:5px 6px;border:1px solid var(--borde);border-radius:8px}
+svg{width:100%;max-width:640px;height:auto;display:block}
+svg text{font-family:inherit}
+.leyenda{font-size:.88rem;color:var(--gris);display:flex;gap:16px;flex-wrap:wrap;margin-top:4px}
+.leyenda span::before{content:"";display:inline-block;width:22px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
+.leyenda .lm::before{border-color:var(--media)}.leyenda .lmd::before{border-color:var(--mediana);border-top-style:dashed}
+.oculto{display:none!important}
+footer{max-width:1000px;margin:0 auto;padding:0 16px 30px;font-size:.82rem;color:var(--gris)}
+ol li,ul li{margin:3px 0}
+.facil{background:#fff;border:1px solid var(--borde);border-left:6px solid var(--ufv);border-radius:8px;padding:10px 14px;margin:6px 0 14px}
+.facil ul{margin:6px 0 0;padding-left:20px}
+.bloqueado{border:2px dashed var(--borde);border-radius:10px;padding:14px;color:var(--gris);text-align:center;margin:14px 0;background:#fafbfc}
+.deslizadores{display:grid;grid-template-columns:1fr;gap:0 18px}
+@media(min-width:640px){.deslizadores{grid-template-columns:1fr 1fr}}
+.extremos{display:flex;justify-content:space-between;font-size:.85rem;color:var(--gris)}
+.leyenda .lmo::before{content:"Mo";width:auto;height:auto;border:0;color:#5b3fa8;font-weight:700;margin-right:4px;vertical-align:baseline}
+.leyenda .lmo2::before{border-color:#5b3fa8;border-top-style:dotted}
+dfn{font-style:normal;font-weight:650}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="marca">
+  <div class="marca-in">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbQAAABzCAMAAADHcAfMAAAAk1BMVEX///8AOGUAIFgANWMAL2AAJlsAHVcAIlkAGFUAG1YAMWEAK14AM2IALF4AKFwAH1gAFlRNZoW5wMl6iZ10hZzc4OVAW3sAAE4pTXKSn6+hrLsAEVJXborz9ffi5urQ1t3Ey9QlS3Lu8fMADVGstsOGlahsf5cAAEmmsL2+xtCwusZgdZCBkaVKZIMTQWs2VHgAAEX/UMZbAAAUzElEQVR42u2d54KquhaAQwm9WVBBmqiooHje/+luGhgcscx2z3jOZf1xFETIl6yWlQwAgwwyyCCDDDLIIIMMMsgggwwyyCCDDDLIIIMMMsgggwwyyCCDDDLIIIP8f8mkmE4LIuzl8v76tei8Xh8uqqExf0pWtizLBhL58ev9w7uhMX9KFpbwJtGGxvwgaJJhDNA+C5r0CIYpFCPXeg1a7nOS9P54zJ/mf/l24j8hya1L+Q+fu/sD/D3l+eVG8vjqa3nyUut2LpD7ed9pfvJeaHCLr1pLL0ErlmIr2qn3x8fzy2nusv04WItPy3LKvrR0uU/nm0fMdtzZusQdOc6F9u/dfH/9tX9eat3RLuCuvAt7TtvvirdCMyLaF9yXoE3ky+dW1A8Nct+XL9DM5y2pPGmaxOY+tWYPHnvLn23yjRk4q/Zv1bmC789fc7dGcw7aVt/3nLZRpm+F5hzoeQftw6H5Sudm8vuPLfGPrfMnb+9Bi7Pspdb1s+Q3oMFD85Pwm9CMn4EGVlLf4Pkqqds7LLfOoh/aH8kPQTOgqrbadmb8GDT7O9BCHrW1eF47dsnw0CA6FJdjZHSKIsBjJh6PQVmmbBjhIyDdVtOS9oTSB1kRkI+qCens6YH4OH4w2WZgq5CehI8ex40LEk6Oh9eh3fEL1SL1g3nZqAZZ+qvQjD+Eluv85/pdf0zoaMf4HrRkV/tw6SnOOqM2rfLO9OhpjZr65GmepsuY42ReBks9ApOltkSf4bMiYtMmS1Fb7goKLfK05dJzbUIzREe89Wkvvm2kmVvSS/45NjrF++iRBmZ8/zODZ7Xj1f19gabUZl2m49pCN5iIOshEagNjXffBwqnHfhbBNWJwdE5aPQ3HmnDIk8MKIh1VqYhT4LrTLJt6goPfiNY4z7OzjH3UwxJGWbr1LPlt0FjXL3dnZqgD9ZNtGtg4fEagflY7wjG4Z9MSl6raxHV94CNowIJEn5bqArUI/ZnKROPqKEPc9ieRXDCf72ICLVZUYstCx0GvwprozVjErpJlkrs/uG+D1jb2VITMZ4rkz/UeUUN0/EflToDdiTrFK6BX3mPuqtSG1eqBQttCEnmOEBCZ+Wm54uXgaBKCC0gHeXag0EKVqdMaImjHI1XGqpuAg2gyReu8CZpltTd/NrTtDVvwQ9Cku2JfoIGKd5Xsbb8jzmtHuXgATRFpM8/QCCLQfAVbwdhTYt9VmD0U1AwcRfKTEwiLA9NNGFqkMk09URrvMUmPNoI2gey3Q/ct0Bx5Js2bmCQ2JXgmd+frPw9ttVotFqsVefn6WnNsDvzlJOE57Sim3YMBrx6R6swVyLpuAw0sVKQf92KEf1DVsSiGW4KjS+lEnurq9SRl0FYq07+BhqEdIstbrz0BQYvYmARj/R3QROznlPMmRss0wXAIwr37wzbNGL3wMJ1Q8prGbe34hW0IL9ZQRNov4aElBFqoIv04Uw7o/q2KyQiPNMbAD2auC7WIQqshD63SdaE6bhKIoJ2+Dc3qNxTlP9tLZC155E1l/6z3+BK0KW9z5eMz2tG+9jIP0G3+TETke9yAFutanHs28kJVhc9aity10sJRxgTaGbJA/4hc/rHOrKCIoFWQ6fa9+wZoIjPihTeLL5E1JG9q60fjtJegpSKvH62eszoRxZd4LtdadzJ0EJMb0EAklnvliM9lTgo4TnIGLT+ynl6oWwKtcFgDLBC9xozlLoIWQGY+q3c4Im6TjKttmd5VDNF5Bn6TaJ870oAhPaEfee14I3OC+ifDZ9vFbWhjt5p5uGPPTFpksfHMZqTF8yXt6BNk4jC0g6sktEeZezBl0Igj4nsisTmJ/g6Xv004JrrkBZfImrwp9Y+1ad1UPxcNdLQjHxk4X3OU/tKoyyRPA8fCnTf56ogg42kZZJCkaxWPq43ooRZjjkjkjHCfL+EyocH12a5R98kcA8VpJTaTwC/WkurjEWbjd4L8DmhS3WR2SkWAp/gSWaujGExMwVZV+2e8x9egdVP98m3tyPumWvz1hIMCRUV3VWj4JEhmE32LHYK2m1Pj6XrUfR97ribpypJkq+g8TG6rnrBSlSXiFa3RR3ENFdHdLUI8OzdTXVPdLbPImR9xGOG66loq52+YTzMUs1EthSkYNnkzIiBkIwULZev7X9IjnwCtGzar2aNTbmuBODjVQh1RLHHIBuMm9EHO3iRhyGjnx4WwmBAfIAuZKdmeDbMu8Jsx/ShYCOcA+ORNOKtnQQzyIsKmcz8TFts4CQ9/DA3OQLVuPKGFIUhacImsJWWq0gy28oHQOqn+m0qnMxjha431wTUi2hYkkChC0pVww5LETcKMmb69kYD4DJuG/LlOiuCR7wjBvxPatQdv4UQj9uuxIiSjHrsgsoU0wIYEOMbsVq/+DO8RgJPxQD/y2vFF+/+x0BycryoIDskLL3PW5A2OrCUnbslY0sdBK/lUv1Hc145iBv4L6lGbUJeROpFqxc1ZqxGZ0vcaFyVewpkAP0w9AtDJs6l3tWNv+P2vgmaJh4vtkuBKsuvkMmctC8nGbFLWIDGP3RztRzgiSEsYdx0NXjvenAjI/SQh9ZDoJXnxt2M/+RaEPP1+3aO5IpkQgWhMA3n9omCRYpRUYxhtuyGwn0+v1NGHQMv4UMSo7uUd3VtTbuHORaIoiut6sxd/u9wJ34L2B3WPLNVM4zEcUhP30K24OWuryYC3hRKXzPqHQOumspQ7szLS6mbQ4CC1aeBVJZZ9ehXa/HvQvl2NZdDoi/IhkVlI06+y4Ldz1jrtm0ltt+6I/HdtmrSaTPuk8B/Oll3VEnRmce2bZST81Mzrai79UWgOKwQhOUbDSbk6HkkL2dOKNElQ6paWttlJB9p/s7BHknvFSx+msqzuQPXFhwVbfwLtu/LNErpmFi42Jeb2NxVzjkxUpI8GoE0tRKHQAn+aRl1sDlv3d0ro1PRxKqubXORHYU/peAdaXJYg3kYkATyNqm1KP0TDNyyqLYOeB9GpIrU+yZhoq2wSRZOsSYk1B/GB6ek06dx0EkyP4xZauq2K/bPQLL28zEtQt59FqZI+DhAAe7ExWYFTvrIv8XVeR20H/vkSuh5onYxwtxKV5+nsH0NL5mJsivME+KbiLZe6NiIfCr5IKiEJooOnapouWjm2afi7kYdEI6eCTGsPIm9B0zxP9zinI1zjuscZq3scefi4Mn5KPVp1oygCKFjUtgWkPbHLP8L0JNSOGj5rrFiX+Pqg15ce/PMldD3QEr2v5rvjO95K8H+BptRnvZrmQDYjP0/2JOJJ3NpZlemhtmwyOwMLPznUNvLMxuoKlzku0jwZC7jMBx2sUnwQT9tFsD7kOYqaWmpjD1ZZutUMkpqZwXqcpFN1nT0DDTa3j8wYs20ZcfLFiqvhV3CfneIG0dhVj5rCaGfwN0roeqCBc9/qio527LmtvSM0q8hx0aNk4kdM57TYLVRHGJpFXGdSjQAW1GjkiudTaDWNJPy5jieRK9qN0MFMhzntOV7jQMkOKYnIFAxto1DXc+vUT0BrJwuRQdOOLEuMB6C+4VbL4BnxfIGjMlaOkp8dpdGqY+eToO2dnqUYvHaEPVoodCSFym6C+NDT/IA+6UE8YWgqbfVazYCvu7TjVmZJoUFaywqyDKQKOxiZG1A1jkDU/DFW2TOPcOO2VVuqljyG1j7W2W6qUs8WVY0gb9wt3LkOKjaAMnXIxq5ltj7PyfokaLF+eylGx69U+yZ3nHpcUkkRHyXmHPrDWSbQWPS3EDOwh1xoRqBFZlv3iGK+y0G5ud0AMpf2UveIbFqsq4zVWTw8htakDSbegqmSI+qqCrngyhJosGrEYKJzNWdIT16ao3CED7JpqN2sm549rx17E/whr51aPnGwEJfrnWMQaGzKZ4HM/xaOrqDFJw3XPR5T0DkYa2zUgQ1cNEOOK6FD7rnrYU/Fs93NEzZNIQ9f/tM8B1KJkkb0wdQUjClyFwVjEi+o0iEKOV+Zl/KffGEKn+Q9Xl33EkPz2rG3KrLriDBoCYTL8zTINtSmNdDQkDjC6AoaqXv0ROhNOwdjXWHttYfNshseWqoaRbMjy8ORhjulGPjpcdcYqFzFuWF6MaT7U1AhHWm49IlJL8iwnmzckUw1vgTXx/fFaZLZK+ve/AOvB9tsFa8d++uPb0I72bTCeiMSaPACLYDMPY3zuIFGWqWyPb9zUGGWEI0/pto6dY+J68avZURMUXXbDrkwVG6htSTHIPSaPkq8oS12Tpxj40LeSGN9Axq3zKUzfXLeh72SPJXqb1xcXuvawUvQFJhezFFnpB1UtoBjsaOOiH9kLsJMLTPVvRxcQRYYLprq1aDRxKTuUW0ciu0xeQoaX+tYOGzyExs0rLZQb0ktuW3ZeAYv89f57GaWn7ced6CV8Gbf/7OE8ZdUf7NUjV/f2++gXdk02uo6g0Zuh7NpqJkdiiB1vZxCm7NxOEJRsuqwg8sYAacXTt1mQbjv0Zg4IS5/4dBHPSzVpxPGjZu0WUtM6xSs7fCYikekGZAtzRyDjT/cOKZxcz4tsJ/yHvlpZn6k/TE0YH/Vj3zMLZ3BS9Bm8iIB8Vhw8Be5kYagbTS4ieODhdemEfV4dqocey5QjcFeV0N00CAL11CAjrpKKqjHiwPnlPgTsqgw0eEEZ1Ucr3waGpsv9HftjJlrqPSgjg8FSEU6Y6QNyWc0YbzVpNsz13yzW/0THHxAxU2UvAFap2qVLlXjO5LTn+ELlwafxpqzzIijON58lqztnZ/MPebYkBUq26WiaTRrVa5rHHOLqFl0xcvoQY8dBL4palDUNK4Tn/Dc3boek7rHVHR1R9eX2+enZiQpJ4F9E7T5mlH4AtWKKj6EC2GPTBviwlmmJ29C42t+7vXq26e9AVonJKMz1Lx21PttfrrnHO626DGfnBfYqTtURR7vGfJyT+u9J6fTlNgjn3w3384E4cwMUzoZjaZt8nhWr4qOa1ie6lkA8pCcEW/P9Xnig+ehCZI62R/nbZ7AkrDCiohWZOsLI1GmAZAckdRVfwndxnk013iPzhugdRARzctrxztm9t9RI8LFobJptg2M569xJBkQx5HlPkKqDonPsPWk/mLVMXx5dR9XGfAn1Vi3BjGpK+B7Ahz/d6BxLccq9/GmGLbRmDX0RjZofH2lGq+hdbw3p/fH+fVkXIriHdA6VatYP/JDTwX/cmid8WIxw5KuGYgUp2XgJSLAsJAbS+H1Q+vMECu9BoRPN3GlUe+ARtKh3GDvaMfiPwWN1eTG8pk6jpKFGzxAWrFdNr/1hEZN3tk6UH8m29Tp/Vw2/h02rVu1Kvp8R1Cz/xY0Ae7zOFspLBwjZo1qRbvRnKkpOQ836XSf2mdAvF2C8xZonVuQA+4579eoJnxxjo/e+OmDzdFerVp8PzTBcUUoyVVjtejcD37jNkMhXlkPoXWcN7kvbwFvj8f3QOuksvgCdvt4N5mya3d1wKs6C3DePQh2g13x29CYPtk3jiPLCyNnsS1+6lis29AKfsm605Po6yyW4EKn90DL+vYXcu9HQtJlZ5ESuinJG4J4t8v7oVWfAU3Q/MZxFFltnSlbX2ode6F1Z1duF6tlbs+y9rc4Iugubz+a9GA2f2u3C6AiucYb5+b8xMoN9ej/uHrs2ayARFdERTZznfFMbxrwsU1L1e7FbjiQeSdo4D26N0Gb3N4U6u5WZySZ0qTbY6U9N9afnzj5PWg060EmXtqqgi3bkTeDD6GBrm6yhC+dMbE7A8Ep3w4tvb1Rjf5oXKzsotGOHhpe2TgBm9A0wz3GlgejGatjTPcpyIoj8MfEbiRBFRVh/pvqkUbWeIc0S2irIg8ky+Vb0mNo0243l7Rtt6cGbvcifDD3Hpt2VbX6RCq0zfMz/RjZeP7pPC+Bs0TP9w+ivfcUz9MUCZvFYB6Ga+WMXskk45Ls47jc/yo0lsnHFVhNdQNId+fpyZWEx9D86+1GTLUqmQeQHI7OVRlIJ959F7SbZQvOw1bNdRatihD3VryR2aF0nHIcg/HS3SZxenKwhQvgzFsdQxDgUtNsCcM89qfmOvlVaJJJe/9RaxfLoM4nP7NjD5Lqi0WRHdFFOGRRgfItv+ft0JJbO55oj23TySloApVMW2No2BHB3zOZI0w2fQlMutEOgVasaTR6Vse/Ck0wzk081dR6dZek3IUWK7d7ws3fkyvwF6DdMtjPJPhLSEoIIsqugZbjGkLYtIiHqwVoKpxAKwNW4SiWvwutrQPJz81/J4isZ6H17uxzS2D8V6CFTv9mRHeTKfisWKRLsjlobUlOrIg+CFh9dyCyLh0nWeA4vw2trbgCk39orbMrPA0NTOCzzLxDry36I2j5137z1CYUhVPh8UansBk0nDEv2sXLqpoiWBMOWlrZayTCj0C7/19kYOPClvMyjktTeAEaGD1ZdKoH4O9A6+Zc7uyXdR32iwouJT1eQ6taaK54BS1YqnK03eSj37Zp3FwNckd0RXGEl6Ch535qnAXgb0Err2/AfW6ppgzHwGW7IHPQpk2hYuLqeQdavmYuyukDoLVmjawqFF6EBo7ew38sZLhfnvJtNg0A7Uae5wk5wipjG4HzNq2tidw4BuhAK5uSfgGWvw9N0Mf3ssQPoIG0hnd/wNCjrzmEN0K7CjwepbDaKFOXRk3NNufy5x4bRys8+RG4k9Z7LKHFhjb8gJHWpn1C+zvQANgLau//O5H10y119UZoV6l+7dnId2VZTbqLQANLO0hjcFTVTQySyJFBF1q+tKcx8CdzwQzjD4Bm1fmXDPAL0PD+2Aq0r1NfkmGKZk+5GDLqreizP3s+V7xcS1XOz34tXLrND5/JP24ZiS5OY1WaoimeKyckjUWTsgGuWgyXUNPX83CvaasPgCZYcBpUr/3/tC8dPogEVxFVSEVUxLoKen2CJOXlz57P71zr6RRTPB43HQonjDHGY4CHUFacFxXNhLFEMXtNq9kowMmtafjbLj9TY/YT/xX04f8Ezf00GyM5ZP6P5ML/uzL8991/IzTDssj//7D+9HU5NOZPSTR7lyyGxhxkkEEGGWSQQQYZZJBBBhlkkEEGGWSQQQYZZJBBBhlkkEEGGWSQQQYZZJDvy/8AlM/pK3qspVUAAAAASUVORK5CYII=" alt="Universidad Francisco de Vitoria">
+    <div class="asig"><strong>Fundamentos de Investigación en Psicología</strong>Facultad de Psicología y Educación · Tema 3: Análisis descriptivo de los datos</div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Misiones"><div class="tabs-in" role="tablist" id="tabs"></div></nav>
+<main>
+
+<!-- ============================ INICIO ============================ -->
+<section class="mision" id="inicio" data-tab="Inicio">
+  <h1>¿Qué dicen tus datos?</h1>
+  <p><strong>Al terminar podrás:</strong> (1) identificar el tipo de variable y elegir la medida y el gráfico adecuados; (2) calcular e interpretar media, mediana, moda, percentiles, rango, varianza y desviación típica; (3) describir la forma de una distribución (asimetría, curtosis) y justificar qué medida la resume mejor.</p>
+  <p><strong>Cómo funciona:</strong> 6 misiones de 10-15 minutos y un reto final. En cada pregunta, primero respondes e indicas tu seguridad; si fallas, recibes pistas antes de la solución. Nada cuenta para nota y no se guarda ningún dato: todo se queda en tu navegador y se borra al cerrar la página.</p>
+  <p class="nota">Los datos son <strong>simulados</strong>: 120 estudiantes ficticios de 1º (91 mujeres, 25 hombres y 4 personas que marcan «otro / prefiere no decirlo»). Están inspirados en encuestas reales sobre jóvenes en España (INJUVE 2024, Barómetro Juventud y Género 2025 de Fad Juventud, Spotify Wrapped 2025, gasto en festivales), pero no son datos reales. Los datos reales suelen ser bastante más desordenados.</p>
+  <div class="card">
+    <div class="titulo">Calentamiento (sin nota): haz tu predicción</div>
+    <p>En nuestra clase simulada, la <strong>media</strong> de lo que cada estudiante se gastó en festivales el último año (Mad Cool, Primavera Sound, FIB, Arenal Sound…) es de <strong><span data-v="mediaFest"></span> €</strong>.</p>
+    <p>¿Qué porcentaje de la clase crees que gastó <strong>más</strong> que esa media?</p>
+    <label for="predInicio" class="oculto">Tu predicción en porcentaje</label>
+    <input type="range" id="predInicio" min="0" max="100" value="50" step="1" aria-describedby="predVal">
+    <p>Tu predicción: <strong id="predVal">50 %</strong></p>
+    <button class="btn prim" id="guardarPred">Guardar mi predicción</button>
+    <div id="predFb" aria-live="polite"></div>
+  </div>
+  <h3>Misiones</h3>
+  <ol>
+    <li><strong>Variables y frecuencias:</strong> ¿Instagram o TikTok? ¿Pareja estable o «no lo tengo claro»? Tablas de frecuencias y de contingencia.</li>
+    <li><strong>Tendencia central:</strong> la amiga que se gasta 2.000 € en el festival y rompe la media. Con laboratorios para mover los datos tú.</li>
+    <li><strong>Posición:</strong> ¿en qué percentil está tu tiempo de pantalla?</li>
+    <li><strong>Dispersión:</strong> misma media, distinta historia. Construye tu propio grupo de amigos.</li>
+    <li><strong>Forma y curva normal:</strong> adivina la forma antes de ver el histograma.</li>
+    <li><strong>Gráficos:</strong> elige el gráfico adecuado y caza el gráfico tramposo.</li>
+    <li><strong>Reto final:</strong> apuestas online y un titular engañoso.</li>
+  </ol>
+  <button class="btn prim" data-ir="m1">Empezar la Misión 1</button>
+</section>
+
+<!-- ============================ MISIÓN 1 ============================ -->
+<section class="mision" id="m1" data-tab="1 · Variables">
+  <h2>Misión 1 · ¿Qué tipo de dato es? Frecuencias y tablas</h2>
+  <div class="facil"><strong>Dicho fácil:</strong> una <dfn>variable</dfn> es cualquier cosa que cambia de una persona a otra: tu red social favorita, tus horas de sueño, tu nota. Antes de calcular nada hay que saber de qué tipo es:
+    <ul>
+      <li><strong>Cualitativa (categorías):</strong> se responde con palabras. Puede ser <dfn>nominal</dfn> (sin orden: Instagram, TikTok…) u <dfn>ordinal</dfn> (con orden: nada, poco, bastante, mucho).</li>
+      <li><strong>Cuantitativa (números de verdad):</strong> se cuenta o se mide. <dfn>Discreta</dfn> si se cuenta (n.º de tatuajes) y <dfn>continua</dfn> si admite decimales (horas de sueño).</li>
+    </ul>
+    Una <dfn>tabla de frecuencias</dfn> solo cuenta cuántas personas hay en cada opción.</div>
+  <div class="pasos">
+    <div class="paso" data-paso="1. Ejemplo resuelto">
+      <span class="etiqueta">Mira cómo se razona</span>
+      <div class="scroll"><table class="t">
+        <tr><th>Variable</th><th>Tipo</th><th>Por qué</th></tr>
+        <tr><td>Artista más escuchado en tu Wrapped (Quevedo, Aitana, Bad Bunny…)</td><td>Nominal</td><td>Categorías sin orden</td></tr>
+        <tr><td>Nervios antes de un examen (nada, poco, bastante, mucho)</td><td>Ordinal</td><td>Hay orden, pero no distancias iguales</td></tr>
+        <tr><td>Número de conciertos al año</td><td>Cuantitativa discreta</td><td>Se cuenta: 0, 1, 2…</td></tr>
+        <tr><td>Horas de sueño</td><td>Cuantitativa continua</td><td>Admite decimales: 6,5 h</td></tr>
+      </table></div>
+      <div class="resumen"><strong>Para llevarte:</strong> primero decide el tipo de variable. Eso decide qué medidas y gráficos tienen sentido.</div>
+    </div>
+    <div class="paso" data-paso="2. Tu turno">
+      <span class="etiqueta">Clasifica cada variable</span>
+      <div class="q" data-q="m1_q1"></div>
+      <div class="q" data-q="m1_q2"></div>
+      <div class="q" data-q="m1_q3"></div>
+    </div>
+    <div class="paso" data-paso="3. Frecuencias">
+      <span class="etiqueta">Primero calcula, luego mira la tabla</span>
+      <p>En la clase simulada (n = 120), <strong><span data-v="fiTikTok"></span></strong> personas eligen TikTok como red favorita.</p>
+      <div class="q" data-q="m1_q4"></div>
+      <div class="grid dos">
+        <div class="ctrl">
+          <label for="m1Var">Variable</label>
+          <select id="m1Var">
+            <option value="red_favorita">Red social favorita</option>
+            <option value="genero_musical">Género musical favorito</option>
+            <option value="ansiedad_examenes">Ansiedad ante los exámenes</option>
+            <option value="relacion_preferida">Modelo de relación preferido</option>
+          </select>
+          <label><input type="checkbox" id="m1Acum"> Mostrar frecuencias acumuladas (las que vas sumando fila a fila)</label>
+          <div id="m1Aviso" aria-live="polite"></div>
+        </div>
+        <div><div class="scroll" id="m1Tabla"></div><div id="m1Barras"></div></div>
+      </div>
+      <div class="pareja"><strong>En parejas:</strong> ¿por qué las frecuencias acumuladas tienen sentido para la ansiedad pero no para la red social favorita? Explícaselo a tu compañera o compañero en una frase.</div>
+    </div>
+    <div class="paso" data-paso="4. Contingencia">
+      <span class="etiqueta">Cruza dos variables</span>
+      <p>Preguntamos a la clase qué modelo de relación prefieren. ¿Responden igual mujeres y hombres?</p>
+      <div class="q" data-q="m1_q5"></div>
+      <div class="ctrl">
+        <label for="m1Cruce">Tabla</label>
+        <select id="m1Cruce">
+          <option value="rel">Modelo de relación preferido × sexo</option>
+          <option value="ans">Ansiedad ante los exámenes × estudia y trabaja</option>
+        </select>
+        <label for="m1Pct">Mostrar</label>
+        <select id="m1Pct">
+          <option value="rec">Recuentos</option>
+          <option value="col">% por columna (dentro de cada grupo)</option>
+          <option value="fila">% por fila</option>
+          <option value="total">% del total</option>
+        </select>
+      </div>
+      <div class="scroll" id="m1Conting"></div>
+      <div class="q" data-q="m1_q6"></div>
+      <div class="q" data-q="m1_q7"></div>
+      <div class="card">
+        <div class="titulo">¿Y en la población real?</div>
+        <p>En el <em>Barómetro Juventud y Género 2025</em> (Fad Juventud, jóvenes de 15 a 29 años en España), prefiere una pareja monógama el <strong>77,5 %</strong> de las mujeres y el <strong>63,1 %</strong> de los hombres, y menos del 8 % prefiere otros modelos. Además, tiene pareja en la actualidad el <strong>60,6 %</strong> de las mujeres y el <strong>47,2 %</strong> de los hombres.</p>
+        <p class="nota">Compara con la tabla de la clase: ¿se parecen? Una muestra pequeña (como una clase) puede alejarse del dato poblacional solo por azar.</p>
+      </div>
+      <p class="nota">SPSS: Analizar &gt; Estadísticos descriptivos &gt; Tablas cruzadas &gt; Casillas. jamovi: Análisis &gt; Frecuencias &gt; Muestras independientes. Indica siempre sobre qué total calculas el porcentaje.</p>
+      <div class="resumen"><strong>Para llevarte:</strong> para comparar grupos de distinto tamaño, usa porcentajes calculados <em>dentro</em> de cada grupo, da siempre el n y recuerda que un porcentaje describe a un grupo, no a cada persona.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISIÓN 2 ============================ -->
+<section class="mision" id="m2" data-tab="2 · Tendencia central">
+  <h2>Misión 2 · ¿Qué es lo «normal» en tu grupo?</h2>
+  <div class="facil"><strong>Dicho fácil:</strong> las medidas de tendencia central intentan responder con un solo número a «¿qué es lo típico en este grupo?».
+    <ul>
+      <li><strong>Media:</strong> lo que tocaría a cada persona si lo repartiéramos todo a partes iguales.</li>
+      <li><strong>Mediana:</strong> el valor de la persona que queda justo en el medio si ponemos a todo el grupo en fila, de menor a mayor.</li>
+      <li><strong>Moda:</strong> la respuesta que más se repite.</li>
+    </ul>
+  </div>
+  <div class="pasos">
+    <div class="paso" data-paso="1. Ejemplo resuelto">
+      <span class="etiqueta">Ejemplo completo</span>
+      <p>Tu grupo compró 5 entradas para conciertos: <strong>45, 50, 50, 60 y 70 €</strong>.</p>
+      <ul>
+        <li><strong>Media (M):</strong> sumamos y repartimos entre 5 → (45 + 50 + 50 + 60 + 70) / 5 = 275 / 5 = <strong>55 €</strong></li>
+        <li><strong>Mediana (Mdn):</strong> ordenamos y miramos la del medio (la 3.ª de 5) → <strong>50 €</strong></li>
+        <li><strong>Moda (Mo):</strong> el precio que más se repite → <strong>50 €</strong> (sale dos veces)</li>
+      </ul>
+      <div id="m2Ej"></div>
+      <div class="leyenda"><span class="lm">Media: punto de equilibrio (▲)</span><span class="lmd">Mediana</span><span class="lmo">= moda</span></div>
+      <p class="nota">Imagina que cada entrada es una pesa colocada sobre una tabla. La tabla solo se queda en equilibrio si apoyas el triángulo justo en la <strong>media</strong>. Por eso un dato muy alejado «tira» de la media, igual que una pesa en la punta de un balancín.</p>
+      <div class="resumen"><strong>Para llevarte:</strong> la media sirve para datos con números (cuantitativos); la mediana, para números y para categorías con orden (ordinales); la moda, para cualquier tipo de dato, incluso categorías sin orden (nominales).</div>
+    </div>
+
+    <div class="paso" data-paso="2. Completa tú">
+      <span class="etiqueta">Ejemplo con huecos</span>
+      <p>Minutos en TikTok ayer de 6 amigas: <strong>20, 35, 40, 40, 55 y 250</strong>. (Sí, la de 250 eres tú en época de exámenes.)</p>
+      <div class="q" data-q="m2_q1"></div>
+      <div class="q" data-q="m2_q2"></div>
+      <div class="q" data-q="m2_q3"></div>
+      <div class="bloqueado" id="m2ExploraLock">Responde la última pregunta para desbloquear el laboratorio: podrás mover los minutos de cada amiga y ver qué pasa.</div>
+      <div id="m2Explora" class="card oculto">
+        <div class="titulo">Laboratorio: mueve los minutos de cada amiga</div>
+        <p class="nota">Arrastra los deslizadores. Fíjate en qué medida se mueve y cuál se queda quieta.</p>
+        <div class="deslizadores" id="m2ExSliders"></div>
+        <div id="m2ExPlot"></div>
+        <div class="leyenda"><span class="lm">Media (▲ equilibrio)</span><span class="lmd">Mediana</span><span class="lmo">= moda</span></div>
+        <p id="m2ExStats"></p>
+        <div class="q" style="margin-top:6px"><fieldset><legend>Retos (elige uno)</legend>
+          <label class="op"><input type="radio" name="m2Reto" value="a" checked> A: consigue que la media y la mediana valgan lo mismo</label>
+          <label class="op"><input type="radio" name="m2Reto" value="b"> B: consigue una media mayor que 100 min con una mediana menor que 50 min</label>
+          <label class="op"><input type="radio" name="m2Reto" value="c"> C: consigue que haya dos modas</label>
+        </fieldset></div>
+        <div id="m2ExReto" aria-live="polite"></div>
+        <p><button class="btn" id="m2ExReset">Volver a los datos originales</button></p>
+      </div>
+    </div>
+
+    <div class="paso" data-paso="3. La amiga del glamping">
+      <span class="etiqueta">Predice y después experimenta</span>
+      <p>Diez amigas comparan lo que se gastaron en su último festival. Nueve gastaron entre 80 y 140 €. La décima puede ser alguien que se compró la entrada VIP y el glamping.</p>
+      <div class="q"><fieldset><legend>Antes de mover nada: si la décima amiga gasta muchísimo más, ¿qué medida cambiará más?</legend>
+        <label class="op"><input type="radio" name="m2Pred" value="media"> La media</label>
+        <label class="op"><input type="radio" name="m2Pred" value="mediana"> La mediana</label>
+        <label class="op"><input type="radio" name="m2Pred" value="moda"> La moda</label>
+        <label class="op"><input type="radio" name="m2Pred" value="igual"> Las tres por igual</label>
+      </fieldset></div>
+      <div class="bloqueado" id="m2LabLock">Elige una respuesta para desbloquear el deslizador.</div>
+      <div id="m2Lab" class="card oculto">
+        <div class="ctrl"><label for="m2Ext">Gasto de la décima amiga: <span id="m2ExtVal">150</span> €</label>
+        <input type="range" id="m2Ext" min="140" max="2000" step="10" value="150"></div>
+        <div id="m2Plot"></div>
+        <div class="leyenda"><span class="lm">Media (▲ equilibrio)</span><span class="lmd">Mediana</span><span class="lmo">= moda</span></div>
+        <p id="m2Stats"></p>
+        <div id="m2Fb" aria-live="polite"></div>
+      </div>
+      <div class="pareja"><strong>En parejas:</strong> ¿qué medida usaría un festival para presumir de que «nuestro público gasta mucho»? ¿Y cuál usarías tú para describir a la asistente típica?</div>
+    </div>
+
+    <div class="paso" data-paso="4. La cola tira de la media">
+      <span class="etiqueta">Forma de los datos y tendencia central</span>
+      <p>Hasta ahora había <em>una</em> persona muy alejada. ¿Qué pasa cuando hay <em>varias</em> y forman una «cola» (un lado largo del gráfico con pocas personas)?</p>
+      <div class="q" data-q="m2_q6"></div>
+      <div class="bloqueado" id="m2SesgoLock">Responde para desbloquear el simulador de exámenes.</div>
+      <div id="m2Sesgo" class="card oculto">
+        <div class="titulo">Simulador: nota de 200 estudiantes en un examen (de 0 a 100)</div>
+        <div class="ctrl"><label for="m2S">Dificultad del examen: <span id="m2SVal"></span></label>
+        <input type="range" id="m2S" min="-1" max="1" step="0.1" value="0">
+        <div class="extremos"><span>← Muy fácil</span><span>Muy difícil →</span></div></div>
+        <div id="m2SPlot"></div>
+        <div class="leyenda"><span class="lm">Media</span><span class="lmd">Mediana</span><span class="lmo2">Moda (barra más alta)</span></div>
+        <p id="m2SStats"></p>
+        <p class="nota">Las notas son inventadas para mostrar la idea. En la Misión 5 verás que esta «cola» se llama <strong>asimetría</strong>.</p>
+      </div>
+    </div>
+
+    <div class="paso" data-paso="5. Sin ayuda">
+      <span class="etiqueta">Problemas nuevos</span>
+      <div class="q" data-q="m2_q4"></div>
+      <div class="bloqueado" id="m2ModaBoxLock">Responde para ver el gráfico de la clase.</div>
+      <div id="m2ModaBox" class="card oculto">
+        <div class="titulo">Género musical favorito en la clase</div>
+        <div id="m2ModaPlot"></div>
+        <p class="nota">La barra más larga es la moda. No tiene sentido hablar de un «género musical medio»: no se pueden sumar «pop» y «rock».</p>
+      </div>
+      <div class="q" data-q="m2_q5"></div>
+      <div class="bloqueado" id="m2OrdBoxLock">Responde para desbloquear el laboratorio de la mediana con categorías.</div>
+      <div id="m2OrdBox" class="card oculto">
+        <div class="titulo">Laboratorio: la mediana con categorías ordenadas</div>
+        <p class="nota">Pon a toda la clase en fila, de «nada» a «mucho» de ansiedad. La mediana es la categoría de la persona que queda en el medio (la línea del 50 %). Cambia cuántas personas hay en cada categoría.</p>
+        <div class="deslizadores" id="m2OrdSliders"></div>
+        <div id="m2OrdPlot"></div>
+        <div id="m2OrdTxt" aria-live="polite"></div>
+      </div>
+      <div class="resumen"><strong>Para llevarte:</strong> si hay valores muy alejados o una cola larga, la mediana describe mejor a la persona típica que la media. Con categorías sin orden, solo la moda; con categorías ordenadas, mejor la mediana.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISIÓN 3 ============================ -->
+<section class="mision" id="m3" data-tab="3 · Posición">
+  <h2>Misión 3 · ¿En qué lugar del ranking estás?</h2>
+  <div class="facil"><strong>Dicho fácil:</strong> las <dfn>medidas de posición</dfn> dicen en qué puesto quedas si ponemos a toda la clase en fila, de menor a mayor. Es como el ranking de un videojuego, pero en porcentajes: estar en el <dfn>percentil 80</dfn> significa que igualas o superas al 80 % del grupo.</div>
+  <div class="pasos">
+    <div class="paso" data-paso="1. La idea">
+      <span class="etiqueta">Explicación breve</span>
+      <p>Un dato solo se interpreta comparándolo con un grupo. Ordenamos los datos de menor a mayor y buscamos puntos de corte:</p>
+      <ul>
+        <li><strong>Cuartiles:</strong> Q1, Q2 y Q3 dividen los datos en 4 partes (≈25 % cada una). Q2 es la mediana.</li>
+        <li><strong>Percentiles:</strong> 99 puntos de corte que dividen en 100 partes. Q1 = P25, Q2 = P50, Q3 = P75.</li>
+        <li><strong>Interpretación:</strong> estar en el P80 significa que tu valor es igual o superior al de aproximadamente el 80 % del grupo.</li>
+      </ul>
+      <div class="q" data-q="m3_q1"></div>
+    </div>
+    <div class="paso" data-paso="2. Tu posición">
+      <span class="etiqueta">Introduce tu valor (no se guarda)</span>
+      <div class="grid dos">
+        <div class="ctrl">
+          <label for="m3Var">Variable</label>
+          <select id="m3Var"></select>
+          <label for="m3Val">Tu valor</label>
+          <input type="text" inputmode="decimal" id="m3Val" style="width:140px;font:inherit;padding:6px 8px;border:1px solid var(--borde);border-radius:8px">
+          <div id="m3Texto" aria-live="polite"></div>
+        </div>
+        <div><div id="m3Box"></div><p id="m3Cuart"></p></div>
+      </div>
+      <p class="nota">Cómo leer el diagrama de caja: la línea gruesa es la mediana; la caja contiene al 50 % central de la clase (de Q1 a Q3); las «patillas» llegan hasta los valores normales más extremos, y los puntos sueltos son <dfn>valores atípicos</dfn> (datos muy alejados del resto, que no tienen por qué ser errores). Cada programa puede calcular los percentiles de forma ligeramente distinta.</p>
+      <div class="pareja"><strong>En parejas:</strong> comparad vuestro percentil en horas de móvil. ¿Un percentil alto es siempre «bueno»? ¿Y en horas de sueño?</div>
+    </div>
+    <div class="paso" data-paso="3. Calcula">
+      <span class="etiqueta">Hazlo a mano</span>
+      <p>Cafés (o latas de bebida energética) a la semana de 8 compañeras: <strong>9, 2, 0, 4, 2, 5, 1, 3</strong>.</p>
+      <div class="q" data-q="m3_q2"></div>
+      <div class="q" data-q="m3_q3"></div>
+      <div class="resumen"><strong>Para llevarte:</strong> un percentil es una posición relativa dentro de un grupo de referencia, no una nota ni un porcentaje de aciertos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISIÓN 4 ============================ -->
+<section class="mision" id="m4" data-tab="4 · Dispersión">
+  <h2>Misión 4 · Misma media, distinta historia</h2>
+  <div class="facil"><strong>Dicho fácil:</strong> la <dfn>dispersión</dfn> dice cuánto se parecen (o no) las personas de un grupo. Si todo el mundo hace casi lo mismo, la dispersión es baja; si hay personas en los dos extremos, es alta. Dos grupos pueden tener la misma media y ser muy distintos por dentro.
+    <ul>
+      <li><strong>Rango:</strong> distancia entre el valor más alto y el más bajo.</li>
+      <li><strong>Desviación típica (DT):</strong> cuánto se alejan las personas de la media, «de media». Se expresa en las mismas unidades que los datos (horas, euros…).</li>
+      <li><strong>Varianza:</strong> la DT al cuadrado. Es un paso del cálculo; cuesta más de interpretar porque sus unidades están al cuadrado (h²).</li>
+    </ul></div>
+  <div class="pasos">
+    <div class="paso" data-paso="1. El caso">
+      <span class="etiqueta">Ejemplo resuelto (grupo A)</span>
+      <p>Dos grupos de amigos apuntan cuántas horas pasaron ayer en redes sociales. Los dos tienen <strong>media = 3 h</strong>. «Entonces usamos las redes igual», dice alguien. ¿Seguro?</p>
+      <div class="scroll"><table class="t">
+        <tr><th></th><th>Datos (h)</th><th>Rango</th></tr>
+        <tr><td>Grupo A</td><td>2, 3, 3, 3, 3, 4</td><td>4 − 2 = 2 h</td></tr>
+        <tr><td>Grupo B</td><td>0, 1, 2, 4, 5, 6</td><td>6 − 0 = 6 h</td></tr>
+      </table></div>
+      <p><strong>Cálculo paso a paso de la dispersión del grupo A.</strong> Como estas 6 personas son todo el grupo que nos interesa, usamos la fórmula <dfn>poblacional</dfn> (dividir entre N = 6). Idea: mirar cuánto se aleja cada persona de la media (3 h), elevarlo al cuadrado para que lo negativo no cancele lo positivo, y hacer la media.</p>
+      <div class="scroll"><table class="t">
+        <tr><th>xᵢ</th><td>2</td><td>3</td><td>3</td><td>3</td><td>3</td><td>4</td></tr>
+        <tr><th>xᵢ − μ</th><td>−1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><th>(xᵢ − μ)²</th><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+      </table></div>
+      <p>Suma de cuadrados = 2 → varianza σ² = 2 / 6 ≈ 0,33 h² → desviación típica σ = √0,33 ≈ <strong>0,58 h</strong>. En palabras: de media, cada persona se aleja algo más de media hora de las 3 h.</p>
+      <div class="resumen"><strong>Para llevarte:</strong> la desviación típica devuelve el resultado a la unidad original (horas) y resume cuánto se separan los datos de la media.</div>
+    </div>
+    <div class="paso" data-paso="2. Ahora tú (grupo B)">
+      <span class="etiqueta">Ejemplo con huecos</span>
+      <div class="scroll"><table class="t">
+        <tr><th>xᵢ</th><td>0</td><td>1</td><td>2</td><td>4</td><td>5</td><td>6</td></tr>
+        <tr><th>xᵢ − μ</th><td>−3</td><td>−2</td><td>−1</td><td>1</td><td>2</td><td>3</td></tr>
+        <tr><th>(xᵢ − μ)²</th><td>?</td><td>?</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+      </table></div>
+      <div class="q" data-q="m4_q1"></div>
+      <div class="q" data-q="m4_q2"></div>
+      <p class="nota"><strong>Ojo con el software:</strong> SPSS y jamovi suponen que tus datos son una <em>muestra</em> (una parte de un grupo más grande) y dividen entre n − 1 (aquí, 5) en lugar de entre N. Es la DT <em>muestral</em>. Para el grupo B daría √(28/5) ≈ 2,37 h. Con muestras grandes, la diferencia es pequeña.</p>
+    </div>
+    <div class="paso" data-paso="3. Construye tu grupo">
+      <span class="etiqueta">Reto constructivo</span>
+      <p>Escribe las horas de redes de 6 amigos inventados y cumple el reto. La gráfica y los estadísticos se actualizan al momento.</p>
+      <div class="q"><fieldset><legend>Elige un reto</legend>
+        <label class="op"><input type="radio" name="m4Reto" value="r1" checked> Reto 1: media = 3 h y desviación típica = 0</label>
+        <label class="op"><input type="radio" name="m4Reto" value="r2"> Reto 2: media = 3 h y desviación típica mayor que 2,5 h (grupo muy polarizado)</label>
+        <label class="op"><input type="radio" name="m4Reto" value="r3"> Reto 3: media = 3 h, rango = 6 h (como el grupo B) y desviación típica menor que 1,8 h</label>
+      </fieldset></div>
+      <div class="fila-num" id="m4Inputs"></div>
+      <div id="m4Plot"></div>
+      <div class="scroll" id="m4Tabla"></div>
+      <div id="m4Estado" aria-live="polite"></div>
+      <div class="pareja"><strong>En parejas:</strong> en el reto 3, ¿qué os dice sobre el rango que dos grupos tengan el mismo rango y desviaciones típicas tan distintas?</div>
+      <div class="resumen"><strong>Para llevarte:</strong> el rango solo usa los dos extremos; la varianza y la desviación típica usan todos los datos.</div>
+    </div>
+    <div class="paso" data-paso="4. Aplica">
+      <span class="etiqueta">Problema nuevo</span>
+      <div class="q" data-q="m4_q3"></div>
+      <div class="q" data-q="m4_q4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISIÓN 5 ============================ -->
+<section class="mision" id="m5" data-tab="5 · Forma">
+  <h2>Misión 5 · La forma de los datos y la curva normal</h2>
+  <div class="facil"><strong>Dicho fácil:</strong> la <dfn>forma</dfn> es el dibujo que hacen los datos en un histograma. ¿Se amontonan en el centro? ¿Hay una <dfn>cola</dfn> (un lado largo con pocas personas)?
+    <ul>
+      <li><strong>Asimetría:</strong> indica hacia qué lado va la cola. Positiva = cola a la derecha; negativa = cola a la izquierda.</li>
+      <li><strong>Curtosis:</strong> indica cuánto pesan los valores muy alejados del centro.</li>
+      <li><strong>Curva normal:</strong> la famosa campana simétrica que usamos como modelo de referencia.</li>
+    </ul></div>
+  <div class="pasos">
+    <div class="paso" data-paso="1. ¿Acertaste?">
+      <span class="etiqueta">Vuelve a tu predicción del inicio</span>
+      <div id="m5Reveal"></div>
+      <div id="m5Fest"></div>
+      <div class="leyenda"><span class="lm">Media</span><span class="lmd">Mediana</span></div>
+      <div class="resumen"><strong>Para llevarte:</strong> en una distribución con cola a la derecha (asimetría positiva), la media se va hacia la cola y queda por encima de la mediana.</div>
+    </div>
+    <div class="paso" data-paso="2. Adivina la forma">
+      <span class="etiqueta">Predice antes de ver el histograma</span>
+      <div class="grid dos">
+        <div class="ctrl">
+          <label for="m5Var">Variable</label>
+          <select id="m5Var"></select>
+          <p class="nota" id="m5Desc"></p>
+          <div class="q" style="margin:6px 0"><fieldset><legend>¿Qué asimetría esperas?</legend>
+            <label class="op"><input type="radio" name="m5Pred" value="pos"> Positiva (cola a la derecha)</label>
+            <label class="op"><input type="radio" name="m5Pred" value="sim"> Aproximadamente simétrica</label>
+            <label class="op"><input type="radio" name="m5Pred" value="neg"> Negativa (cola a la izquierda)</label>
+          </fieldset></div>
+          <button class="btn prim" id="m5Revelar">Revelar histograma</button>
+        </div>
+        <div>
+          <div id="m5Res" aria-live="polite"></div>
+          <div id="m5HistBox" class="oculto">
+            <div id="m5Hist"></div>
+            <div class="leyenda"><span class="lm">Media</span><span class="lmd">Mediana</span></div>
+            <div class="ctrl"><label for="m5Bins">Número de intervalos: <span id="m5BinsVal">12</span></label>
+            <input type="range" id="m5Bins" min="4" max="40" value="12"></div>
+            <p class="nota">Cambia el número de intervalos: la forma que «ves» depende de esta elección.</p>
+          </div>
+        </div>
+      </div>
+      <p class="nota">Regla práctica (orientativa): asimetría entre −0,5 y 0,5 ≈ simétrica. En curtosis, SPSS y jamovi dan el <em>exceso de curtosis</em>: le restan 3 para que la curva normal valga 0. Positivo = <dfn>leptocúrtica</dfn> (más valores muy alejados que en la normal); cerca de 0 = <dfn>mesocúrtica</dfn>; negativo = <dfn>platicúrtica</dfn> (menos valores extremos).</p>
+      <div class="q" data-q="m5_q1"></div>
+    </div>
+    <div class="paso" data-paso="3. Curva normal">
+      <span class="etiqueta">Puntuaciones z y área bajo la curva</span>
+      <div class="facil"><strong>Dicho fácil:</strong> la <dfn>puntuación z</dfn> dice a cuántas desviaciones típicas estás de la media. z = 0: justo en la media; z = 1: una DT por encima; z = −2: dos DT por debajo. El <dfn>área sombreada</dfn> es el porcentaje de personas que sacan tu puntuación o menos.</div>
+      <p>Prueba de atención con <strong>M = 50 y DT = 10</strong> (aproximadamente normal). ¿60 puntos es mucho o poco?</p>
+      <div class="ctrl"><label for="m5X">Puntuación de una persona: <span id="m5XVal">60</span></label>
+      <input type="range" id="m5X" min="20" max="80" value="60"></div>
+      <div id="m5Normal"></div>
+      <p id="m5Z"></p>
+      <div class="q" data-q="m5_q2"></div>
+      <div class="q" data-q="m5_q3"></div>
+      <p class="nota">Una puntuación poco frecuente no es, por sí sola, un diagnóstico. Y que un histograma «se parezca» a la campana no basta para afirmar que la variable es normal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MISIÓN 6 ============================ -->
+<section class="mision" id="m6" data-tab="6 · Gráficos">
+  <h2>Misión 6 · Elige el gráfico y caza el tramposo</h2>
+  <div class="facil"><strong>Dicho fácil:</strong> cada tipo de dato tiene su gráfico. Para categorías, barras; para números, histograma o caja; para ver cambios en el tiempo, líneas; y para ver si dos variables van juntas, dispersión. Además, los mismos datos se pueden contar de forma honesta… o tramposa.</div>
+  <div class="pasos">
+    <div class="paso" data-paso="1. ¿Qué gráfico?">
+      <span class="etiqueta">Elige el gráfico adecuado para cada pregunta</span>
+      <div class="q" data-q="m6_q1"></div>
+      <div class="q" data-q="m6_q2"></div>
+      <div class="q" data-q="m6_q3"></div>
+      <div class="q" data-q="m6_q4"></div>
+      <div class="q" data-q="m6_q5"></div>
+    </div>
+    <div class="paso" data-paso="2. Compruébalo">
+      <span class="etiqueta">Los gráficos con los datos de la clase</span>
+      <div class="ctrl"><label for="m6Tipo">Gráfico</label>
+      <select id="m6Tipo">
+        <option value="barras">Barras: red social favorita</option>
+        <option value="hist">Histograma: horas de sueño</option>
+        <option value="caja">Caja y bigotes: horas de móvil según hace «previa»</option>
+        <option value="disp">Dispersión: horas de móvil y horas de sueño</option>
+      </select></div>
+      <div id="m6Plot"></div>
+      <p class="nota">Ojo: que dos cosas vayan juntas (<dfn>asociación</dfn>) no demuestra que una cause la otra (<dfn>causalidad</dfn>). Quien usa más el móvil duerme menos, pero puede ser que duerma menos por estrés y por eso use más el móvil.</p>
+    </div>
+    <div class="paso" data-paso="3. Gráfico tramposo">
+      <span class="etiqueta">Detecta el truco</span>
+      <p>Una cuenta de Instagram publica: «¡Las de Psicología van MUCHO más a festivales que los de ADE!»</p>
+      <div class="pills" role="tablist" id="m6Eje">
+        <button role="tab" aria-selected="true" data-eje="trunc">Gráfico publicado</button>
+        <button role="tab" aria-selected="false" data-eje="cero">Con el eje desde 0</button>
+      </div>
+      <div id="m6Trampa"></div>
+      <div class="q" data-q="m6_q6"></div>
+      <div class="resumen"><strong>Para llevarte:</strong> en un gráfico de barras el eje empieza en 0; evita el 3D y los sectores con muchas categorías.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RETO FINAL ============================ -->
+<section class="mision" id="reto" data-tab="Reto final">
+  <h2>Reto final · El titular de las apuestas</h2>
+  <p>Según el INJUVE, cerca del 18 % de los jóvenes ha participado en apuestas online. Preguntamos a 15 personas cuánto gastaron en apuestas el último mes (€):</p>
+  <p><strong>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 20, 400</strong></p>
+  <p class="nota">Sin explicación previa: usa lo que has practicado. Datos inventados.</p>
+  <div class="q" data-q="rf_q1"></div>
+  <div class="q" data-q="rf_q2"></div>
+  <div class="q" data-q="rf_q3"></div>
+  <div class="card">
+    <div class="titulo">Autoexplicación</div>
+    <p>Escribe con tus palabras cómo describirías estos datos en un informe (qué medidas darías y por qué). Después compara con el modelo.</p>
+    <label for="rfTexto" class="oculto">Tu explicación</label>
+    <textarea id="rfTexto" rows="4" placeholder="Yo describiría estos datos…"></textarea>
+    <p><button class="btn" id="rfModelo">Comparar con una respuesta modelo</button></p>
+    <div id="rfModeloTxt" aria-live="polite"></div>
+  </div>
+  <div class="pareja"><strong>En parejas:</strong> leed vuestras explicaciones. ¿Qué incluyó tu compañera o compañero que tú no?</div>
+</section>
+
+<!-- ============================ CIERRE ============================ -->
+<section class="mision" id="cierre" data-tab="Cierre">
+  <h2>Cierre: lo que te llevas</h2>
+  <ol>
+    <li>El tipo de variable decide qué medidas y gráficos tienen sentido.</li>
+    <li>Media, mediana y moda resumen el centro; con valores extremos, la mediana describe mejor el caso típico.</li>
+    <li>Un percentil es tu posición dentro de un grupo de referencia, no tu nota.</li>
+    <li>La media sola no cuenta la historia: acompáñala siempre de una medida de dispersión (M y DT) y del n.</li>
+    <li>Mira la forma (histograma, asimetría, curtosis) antes de elegir cómo resumir los datos.</li>
+  </ol>
+  <div class="card"><div class="titulo">Tu calibración: ¿sabías lo que creías saber?</div><div id="calib"></div></div>
+  <div class="card">
+    <div class="titulo">Repaso en una semana (práctica espaciada)</div>
+    <p>Vuelve dentro de unos días y responde preguntas barajadas, sin mirar los apuntes.</p>
+    <div id="repQ"></div>
+    <p><button class="btn prim" id="repCheck">Comprobar</button> <button class="btn" id="repOtra">Otra pregunta</button></p>
+    <div id="repFb" aria-live="polite"></div>
+  </div>
+  <div class="card">
+    <div class="titulo">Practica en jamovi o SPSS</div>
+    <p>Descarga la base de datos simulada (CSV, una fila por persona) y reproduce los análisis: frecuencias, tablas cruzadas, descriptivos, asimetría, curtosis y gráficos.</p>
+    <button class="btn prim" id="descarga">Descargar encuesta_genz_simulada.csv</button>
+  </div>
+</section>
+
+<!-- ============================ ACERCA DE ============================ -->
+<section class="mision" id="acerca" data-tab="Acerca de">
+  <h2>Acerca de esta herramienta</h2>
+  <div class="card">
+    <div class="titulo">¿Qué es?</div>
+    <p><strong>¿Qué dicen tus datos?</strong> es una aplicación interactiva para aprender <strong>estadística descriptiva</strong>, pensada para estudiantes de 1.º de la asignatura <em>Fundamentos de Investigación en Psicología</em> (Facultad de Psicología y Educación, Universidad Francisco de Vitoria). Acompaña al Tema 3, <em>El proceso de análisis descriptivo de los datos</em>.</p>
+    <p>Funciona como las aplicaciones Shiny que se usan en estadística: en lugar de leer fórmulas, mueves deslizadores, cambias los datos y ves al momento cómo cambian las medidas y los gráficos. La diferencia es que todo funciona en tu navegador, también en el móvil, sin instalar nada.</p>
+  </div>
+  <div class="card">
+    <div class="titulo">¿Qué vas a practicar?</div>
+    <ul>
+      <li><strong>Tipos de variables</strong>, tablas de frecuencias y tablas de contingencia.</li>
+      <li><strong>Tendencia central:</strong> media, mediana y moda, con laboratorios para mover los datos.</li>
+      <li><strong>Posición:</strong> cuartiles y percentiles.</li>
+      <li><strong>Dispersión:</strong> rango, varianza y desviación típica.</li>
+      <li><strong>Forma:</strong> asimetría, curtosis y curva normal.</li>
+      <li><strong>Gráficos:</strong> cuál elegir y cómo detectar gráficos engañosos.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="titulo">¿Cómo está pensada?</div>
+    <p>Se basa en principios de la psicología del aprendizaje: primero predices o respondes y después ves la solución; si fallas, recibes pistas antes de la respuesta; indicas tu seguridad para saber si «sabes lo que crees que sabes»; y los ejemplos van de resueltos a problemas sin ayuda. Los laboratorios se desbloquean cuando respondes, para que pienses antes de experimentar.</p>
+  </div>
+  <div class="card">
+    <div class="titulo">Datos y privacidad</div>
+    <p>Los datos de la clase son <strong>simulados</strong> (120 estudiantes ficticios), inspirados en encuestas reales sobre jóvenes en España: el <em>Informe Juventud en España 2024</em> (INJUVE), el <em>Barómetro Juventud y Género 2025</em> (Fad Juventud) y otros estudios sobre ocio y uso del móvil. La aplicación no guarda ni envía ninguna respuesta: todo se queda en tu navegador y se borra al cerrar la página.</p>
+  </div>
+  <div class="card">
+    <div class="titulo">Autoría</div>
+    <p><strong>Diseño docente y contenidos:</strong> Eduar Ramírez, profesor de Fundamentos de Investigación en Psicología, Facultad de Psicología y Educación, Universidad Francisco de Vitoria.</p>
+    <p><strong>Código:</strong> generado con Claude (Anthropic), a partir de las indicaciones y la revisión del docente.</p>
+  </div>
+  <div class="card">
+    <div class="titulo">Licencia</div>
+    <p>Los <strong>contenidos</strong> (textos, ejercicios y datos simulados) se publican bajo <a href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank" rel="noopener">Creative Commons Atribución 4.0 (CC BY 4.0)</a>: puedes reutilizarlos y adaptarlos citando la autoría. El <strong>código</strong> se publica bajo licencia MIT. El logotipo de la Universidad Francisco de Vitoria pertenece a la universidad y no está incluido en estas licencias.</p>
+    <p class="nota">Cómo citar: Ramírez, E. (2026). <em>¿Qué dicen tus datos? Estadística descriptiva interactiva</em> [Aplicación web]. Facultad de Psicología y Educación, Universidad Francisco de Vitoria.</p>
+  </div>
+</section>
+</main>
+<footer>Herramienta didáctica con datos simulados · Diseño docente: Eduar Ramírez · Código generado con Claude (Anthropic) · Contenidos CC BY 4.0, código MIT · Facultad de Psicología y Educación, Universidad Francisco de Vitoria</footer>
+
+<script>
+"use strict";
+const D = {"id":["P001","P002","P003","P004","P005","P006","P007","P008","P009","P010","P011","P012","P013","P014","P015","P016","P017","P018","P019","P020","P021","P022","P023","P024","P025","P026","P027","P028","P029","P030","P031","P032","P033","P034","P035","P036","P037","P038","P039","P040","P041","P042","P043","P044","P045","P046","P047","P048","P049","P050","P051","P052","P053","P054","P055","P056","P057","P058","P059","P060","P061","P062","P063","P064","P065","P066","P067","P068","P069","P070","P071","P072","P073","P074","P075","P076","P077","P078","P079","P080","P081","P082","P083","P084","P085","P086","P087","P088","P089","P090","P091","P092","P093","P094","P095","P096","P097","P098","P099","P100","P101","P102","P103","P104","P105","P106","P107","P108","P109","P110","P111","P112","P113","P114","P115","P116","P117","P118","P119","P120"],"sexo":["Mujer","Mujer","Mujer","Hombre","Mujer","Otro / prefiere no decirlo","Mujer","Mujer","Mujer","Mujer","Otro / prefiere no decirlo","Mujer","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Otro / prefiere no decirlo","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Hombre","Mujer","Hombre","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Hombre","Mujer","Hombre","Mujer","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Hombre","Hombre","Mujer","Mujer","Mujer","Mujer","Mujer","Otro / prefiere no decirlo","Mujer","Hombre","Mujer","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Hombre","Mujer","Mujer","Hombre","Mujer","Hombre","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Hombre","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Mujer","Hombre","Hombre","Mujer"],"relacion_preferida":["Pareja monógama","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","No lo tengo claro","Pareja monógama","Otros modelos (abierta, puntual…)","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Ahora no quiero pareja","Pareja monógama","No lo tengo claro","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Otros modelos (abierta, puntual…)","Pareja monógama","No lo tengo claro","Otros modelos (abierta, puntual…)","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Ahora no quiero pareja","Pareja monógama","Pareja monógama","Pareja monógama","No lo tengo claro","Pareja monógama","Pareja monógama","No lo tengo claro","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Pareja monógama","Pareja monógama","Otros modelos (abierta, puntual…)","Pareja monógama","No lo tengo claro","Pareja monógama","Ahora no quiero pareja","No lo tengo claro","No lo tengo claro","Otros modelos (abierta, puntual…)","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Otros modelos (abierta, puntual…)","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Otros modelos (abierta, puntual…)","No lo tengo claro","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Pareja monógama","Pareja monógama","Otros modelos (abierta, puntual…)","No lo tengo claro","Ahora no quiero pareja","Pareja monógama","Pareja monógama","No lo tengo claro","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Ahora no quiero pareja","Pareja monógama","Pareja monógama"],"tiene_pareja":["Sí","No","Sí","No","Sí","Sí","No","No","Sí","Sí","No","Sí","Sí","No","No","Sí","Sí","Sí","No","Sí","Sí","Sí","No","No","Sí","No","No","No","Sí","Sí","Sí","No","Sí","Sí","Sí","Sí","Sí","Sí","No","No","Sí","Sí","Sí","Sí","No","Sí","Sí","No","Sí","No","No","No","Sí","Sí","Sí","Sí","Sí","Sí","No","No","No","No","Sí","Sí","Sí","Sí","Sí","Sí","No","No","No","Sí","Sí","Sí","No","No","Sí","No","Sí","No","No","Sí","No","No","Sí","Sí","Sí","Sí","Sí","No","Sí","No","No","No","Sí","No","Sí","Sí","No","No","No","Sí","Sí","Sí","Sí","No","No","No","Sí","Sí","No","Sí","No","Sí","Sí","No","Sí","Sí","No","No"],"red_favorita":["TikTok","YouTube","WhatsApp","Instagram","X/Twitter","X/Twitter","Instagram","WhatsApp","Instagram","TikTok","TikTok","WhatsApp","TikTok","TikTok","Instagram","WhatsApp","TikTok","WhatsApp","YouTube","TikTok","Instagram","TikTok","TikTok","YouTube","TikTok","Instagram","TikTok","TikTok","WhatsApp","Instagram","Instagram","WhatsApp","YouTube","Instagram","WhatsApp","TikTok","Instagram","Instagram","Instagram","TikTok","WhatsApp","TikTok","TikTok","Instagram","TikTok","X/Twitter","Instagram","TikTok","Instagram","Instagram","TikTok","YouTube","Instagram","Instagram","Instagram","WhatsApp","TikTok","WhatsApp","X/Twitter","TikTok","X/Twitter","X/Twitter","TikTok","YouTube","TikTok","Instagram","X/Twitter","YouTube","TikTok","WhatsApp","TikTok","TikTok","Instagram","Instagram","TikTok","TikTok","Instagram","Instagram","X/Twitter","X/Twitter","TikTok","TikTok","YouTube","WhatsApp","Instagram","TikTok","WhatsApp","Instagram","Instagram","YouTube","TikTok","WhatsApp","BeReal","YouTube","TikTok","X/Twitter","TikTok","WhatsApp","Instagram","TikTok","Instagram","TikTok","YouTube","WhatsApp","TikTok","TikTok","WhatsApp","Instagram","TikTok","WhatsApp","TikTok","TikTok","WhatsApp","TikTok","Instagram","Instagram","Instagram","X/Twitter","WhatsApp","Instagram"],"genero_musical":["Urbano/reguetón","Indie","Urbano/reguetón","Urbano/reguetón","Urbano/reguetón","Urbano/reguetón","Urbano/reguetón","Rap/trap","Pop","Urbano/reguetón","Urbano/reguetón","Rock","Indie","Urbano/reguetón","Pop","Electrónica","Rap/trap","Urbano/reguetón","K-pop","Urbano/reguetón","Rap/trap","Electrónica","Electrónica","Electrónica","Urbano/reguetón","K-pop","Pop","Pop","Rap/trap","Rock","Pop","Indie","Urbano/reguetón","Pop","Rock","Electrónica","Electrónica","Urbano/reguetón","Rap/trap","K-pop","Urbano/reguetón","Pop","Urbano/reguetón","Pop","Urbano/reguetón","Pop","K-pop","K-pop","Pop","Indie","Urbano/reguetón","Indie","Pop","Electrónica","K-pop","Electrónica","Urbano/reguetón","Urbano/reguetón","Urbano/reguetón","Indie","Urbano/reguetón","Urbano/reguetón","Rock","Rap/trap","Pop","Urbano/reguetón","Indie","Rock","Urbano/reguetón","Urbano/reguetón","Rap/trap","Urbano/reguetón","Rap/trap","Rock","K-pop","Rock","Urbano/reguetón","Electrónica","Indie","K-pop","Rap/trap","Indie","Pop","Urbano/reguetón","Rap/trap","Pop","Rap/trap","K-pop","Indie","Urbano/reguetón","Pop","Urbano/reguetón","Urbano/reguetón","Indie","Urbano/reguetón","K-pop","Pop","Urbano/reguetón","Rap/trap","Rap/trap","Urbano/reguetón","Urbano/reguetón","Rap/trap","Rap/trap","Urbano/reguetón","Rock","Urbano/reguetón","Indie","Urbano/reguetón","Rap/trap","Pop","Rock","Rap/trap","Pop","Urbano/reguetón","Indie","Rap/trap","Rock","Electrónica","Urbano/reguetón"],"hace_previa":["No","Sí","No","No","Sí","Sí","No","No","Sí","Sí","Sí","Sí","No","Sí","Sí","Sí","No","Sí","Sí","No","Sí","No","No","Sí","Sí","No","No","Sí","Sí","Sí","Sí","Sí","Sí","Sí","No","Sí","Sí","No","Sí","Sí","Sí","Sí","Sí","Sí","No","Sí","Sí","Sí","Sí","Sí","Sí","Sí","Sí","Sí","Sí","No","Sí","No","No","No","Sí","Sí","Sí","No","Sí","Sí","Sí","No","Sí","Sí","Sí","No","No","Sí","Sí","Sí","Sí","Sí","No","Sí","Sí","No","Sí","Sí","Sí","Sí","Sí","No","Sí","Sí","Sí","Sí","No","No","Sí","No","No","No","Sí","Sí","Sí","No","Sí","Sí","Sí","Sí","Sí","No","Sí","No","Sí","No","No","Sí","No","Sí","Sí","Sí","Sí","Sí"],"estudia_y_trabaja":["No","No","No","No","No","No","No","No","Sí","No","No","No","No","No","No","Sí","No","No","Sí","No","Sí","Sí","No","No","No","Sí","No","Sí","No","No","No","No","Sí","No","No","Sí","No","No","Sí","No","No","No","No","No","Sí","No","Sí","No","Sí","No","No","Sí","Sí","No","No","No","No","No","No","No","No","No","No","No","No","Sí","No","Sí","No","No","Sí","No","No","No","No","No","Sí","Sí","No","No","No","Sí","No","Sí","Sí","No","Sí","No","No","No","No","Sí","No","No","Sí","No","No","No","No","No","Sí","Sí","Sí","No","Sí","Sí","No","No","No","No","No","No","No","No","No","No","Sí","No","No","Sí"],"ansiedad_examenes":["Bastante","Poco","Bastante","Nada","Nada","Poco","Mucho","Nada","Mucho","Mucho","Bastante","Poco","Poco","Mucho","Bastante","Mucho","Bastante","Bastante","Bastante","Mucho","Bastante","Poco","Bastante","Mucho","Bastante","Mucho","Bastante","Bastante","Mucho","Bastante","Bastante","Bastante","Bastante","Poco","Bastante","Bastante","Bastante","Nada","Bastante","Bastante","Poco","Bastante","Bastante","Bastante","Nada","Poco","Bastante","Poco","Mucho","Poco","Poco","Mucho","Bastante","Bastante","Mucho","Bastante","Bastante","Bastante","Mucho","Poco","Bastante","Mucho","Poco","Poco","Poco","Bastante","Mucho","Bastante","Poco","Bastante","Mucho","Poco","Bastante","Nada","Bastante","Bastante","Mucho","Mucho","Bastante","Bastante","Mucho","Mucho","Poco","Mucho","Poco","Mucho","Poco","Poco","Mucho","Nada","Poco","Bastante","Nada","Mucho","Bastante","Bastante","Bastante","Poco","Bastante","Nada","Mucho","Poco","Mucho","Poco","Mucho","Mucho","Poco","Nada","Poco","Mucho","Poco","Poco","Bastante","Poco","Poco","Poco","Mucho","Bastante","Poco","Bastante"],"horas_movil_dia":[4.6,3.3,2.1,2.1,1.9,2.5,3.3,4.5,5.1,3.1,4.1,1.1,7.2,3.8,6.1,5,8.5,2.6,2.9,3.6,10.7,9.3,0.9,2.8,3.8,1.5,5,7.9,3.2,5.8,9.4,5.2,6.1,4.1,4.2,6,3.2,3.3,1.5,2.2,2.7,2.1,1.6,9.3,3.8,2.1,1.2,2.7,4,8.3,5.2,3.5,4,2.4,1.3,13.4,5.3,3.2,6,9.6,1.6,8.5,3.4,3.7,2.3,1.5,6,3.9,2,5.1,4.3,1.4,1.6,3.6,2.4,5.4,4.7,3.3,6.1,6.5,5.5,5.5,6.4,2.3,2.8,2.8,3.1,2.6,2.8,5.5,3.9,2.3,0.7,4.6,3,1.8,3.1,7.6,2.8,2.7,2.6,6.7,8,4.9,7.5,7,4.8,2.6,4.4,2.8,3.6,9,7.6,6.6,4.4,3.8,5.8,6.7,8.1,6.5],"horas_sueno":[7.8,8.3,7.3,8.5,8.2,8.2,8,6.9,7.3,7,6.4,8.5,6.1,5.9,6.9,7.5,6.9,7.1,6.7,7.6,6.7,6.9,6.9,7.2,7.1,7.4,6.9,6.8,8.6,5.4,6.5,6,6.5,7.3,7.4,6.6,7.3,6.5,7.4,6,7,7.6,7,5.2,7,6,8,8.4,6.2,5.8,6.5,6.9,6.9,6.9,7.5,7.5,7.8,8.8,7,5.7,6.5,6.8,7.8,6.7,7.2,7.3,7.7,7.3,6.5,5.8,6.4,5.4,7.3,6.4,6.1,6.9,6.6,6.6,6.1,7.6,6.3,7.7,6.8,8.2,6.7,6.4,6.9,7,6.6,7.3,7.2,6.9,7.5,6.3,8.2,8.1,8.3,5.7,6.4,7.4,6.2,7.4,7.3,8.2,6.4,7,6.8,6.9,7.6,7.8,8.6,5.9,7.4,5.9,6.6,7.4,6.6,6.4,6.9,5.8],"gasto_festivales":[15,162,168,56,132,20,45,134,125,77,264,72,248,382,16,67,412,379,144,461,256,135,299,31,129,259,27,105,94,105,221,136,88,285,130,209,52,329,89,298,583,163,84,77,381,87,33,185,28,79,147,71,104,31,31,66,170,112,103,59,74,70,23,177,271,136,15,183,176,269,72,65,98,89,69,23,166,251,30,174,133,198,116,152,75,84,100,94,15,139,539,803,118,84,67,76,33,128,35,246,111,58,178,237,501,176,132,220,208,339,90,127,22,102,36,818,50,86,414,99],"nota_pau":[10.9,12.26,9.24,11.82,9.46,12.5,12.66,10.06,10.37,11.92,13.31,12.77,13.29,9.95,8.21,13.17,5.79,6.52,11.78,13.47,11.65,12.33,12.12,7.32,8.84,5,12.39,11.56,7.41,13.5,13,10.63,12.16,5,9.27,7.63,11.23,9.55,12.6,12.91,11.24,10.21,12.71,7.57,10.99,10.75,10.03,11.44,10.15,12.79,12.44,12.02,8.19,12.33,10.09,10.58,12.49,10.07,11.1,11.68,10.97,8.82,8.21,11.5,8.83,7.71,9.48,12.84,12.58,11.62,12.28,9.14,8.42,13.09,5,11.26,12.33,10.89,9.01,11.34,11.58,10.22,11.37,10.76,13.01,9.44,10.37,8.9,5.32,12.69,10.68,13.1,13.41,9.98,9.39,11.38,11.17,12.69,10.62,13.35,11.38,11.11,9.17,7.83,10.38,7.47,9.05,13.37,12.7,11.49,6.79,8.64,12.27,11.44,12.58,8.27,13.15,6.59,10.82,9.71],"minutos_trayecto":[96,25,25,31,68,99,34,54,42,29,77,100,47,30,25,48,55,55,132,71,50,46,37,40,50,16,33,50,33,16,23,85,54,26,118,37,44,36,20,60,66,57,28,35,22,48,32,51,27,72,75,30,27,102,40,34,34,38,61,44,172,58,56,63,41,27,49,80,68,54,64,96,39,38,64,30,25,38,90,61,36,29,41,32,37,36,36,64,40,31,82,84,54,28,40,15,81,35,26,22,44,41,31,40,59,71,44,16,36,58,39,75,22,41,86,56,113,31,58,63],"cafes_semana":[2,5,3,4,4,3,3,6,3,6,3,5,6,3,3,6,3,3,5,5,4,5,3,1,4,5,5,4,2,2,2,8,3,3,3,4,3,6,5,0,3,1,5,3,3,6,8,5,2,0,7,4,3,6,8,4,0,12,3,9,1,2,1,6,3,5,3,3,4,0,1,4,4,1,3,4,4,2,4,3,4,4,3,5,3,7,6,4,2,1,2,3,5,11,1,6,3,2,1,2,4,5,7,1,4,4,7,5,6,5,7,4,6,3,0,6,4,3,1,6],"horas_gaming_sem":[5,0,0,19,4,10,15,0,0,0,1,11,0,10,1,18,13,11,4,0,0,0,14,10,0,0,14,0,0,23,3,0,16,7,5,4,6,0,19,15,5,0,7,3,4,11,4,0,9,6,23,3,4,2,8,0,10,0,2,3,13,0,14,0,0,13,0,0,0,0,6,18,8,0,2,13,11,0,3,0,17,4,11,10,6,2,4,4,0,4,0,7,2,11,1,2,0,0,0,0,2,0,7,5,4,8,16,5,0,1,16,4,3,0,0,7,3,0,27,6]}
+;
+const N = D.id.length;
+
+/* ---------------- Utilidades numéricas ---------------- */
+const sum = a => a.reduce((s, v) => s + v, 0);
+const mean = a => sum(a) / a.length;
+const sorted = a => [...a].sort((x, y) => x - y);
+function quantile(a, p) { const s = sorted(a), h = (s.length - 1) * p, lo = Math.floor(h); return s[lo] + (h - lo) * ((s[lo + 1] ?? s[lo]) - s[lo]); }
+const median = a => quantile(a, .5);
+const sdPob = a => { const m = mean(a); return Math.sqrt(mean(a.map(v => (v - m) ** 2))); };
+const sdMue = a => { const m = mean(a); return Math.sqrt(sum(a.map(v => (v - m) ** 2)) / (a.length - 1)); };
+function asimetria(a) { const k = a.length, m = mean(a), m2 = mean(a.map(v => (v - m) ** 2)), m3 = mean(a.map(v => (v - m) ** 3)); return (m3 / m2 ** 1.5) * Math.sqrt(k * (k - 1)) / (k - 2); }
+function curtosis(a) { const k = a.length, m = mean(a), m2 = mean(a.map(v => (v - m) ** 2)), m4 = mean(a.map(v => (v - m) ** 4)), g2 = m4 / m2 ** 2 - 3; return ((k + 1) * g2 + 6) * (k - 1) / ((k - 2) * (k - 3)); }
+function modas(a) { const c = new Map(); a.forEach(v => c.set(v, (c.get(v) || 0) + 1)); const mx = Math.max(...c.values()); return [...c].filter(e => e[1] === mx).map(e => e[0]); }
+function pnorm(z) { const t = 1 / (1 + 0.3275911 * Math.abs(z) / Math.SQRT2); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-z * z / 2); return z >= 0 ? (1 + y) / 2 : (1 - y) / 2; }
+const fmt = (x, d = 2) => Number(x).toLocaleString("es-ES", { minimumFractionDigits: d, maximumFractionDigits: d });
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const NIVELES = {
+  red_favorita: ["Instagram", "TikTok", "WhatsApp", "YouTube", "X/Twitter", "BeReal"],
+  genero_musical: ["Urbano/reguetón", "Pop", "Rap/trap", "Indie", "Electrónica", "Rock", "K-pop"],
+  ansiedad_examenes: ["Nada", "Poco", "Bastante", "Mucho"],
+  relacion_preferida: ["Pareja monógama", "Otros modelos (abierta, puntual…)", "Ahora no quiero pareja", "No lo tengo claro"]
+};
+const CUANTI = {
+  horas_movil_dia: { et: "Horas de móvil al día", ud: "h" },
+  horas_sueno: { et: "Horas de sueño entre semana", ud: "h" },
+  gasto_festivales: { et: "Gasto en festivales el último año (€)", ud: "€" },
+  nota_pau: { et: "Nota de admisión PAU (0-14)", ud: "puntos" },
+  minutos_trayecto: { et: "Minutos de trayecto a la uni", ud: "min" },
+  cafes_semana: { et: "Cafés (o bebidas energéticas) a la semana", ud: "unidades" },
+  horas_gaming_sem: { et: "Horas de videojuegos a la semana", ud: "h" }
+};
+const contar = (v, niveles) => niveles.map(l => D[v].filter(x => x === l).length);
+
+/* Valores derivados que aparecen en los textos */
+const V = {};
+V.fiTikTok = D.red_favorita.filter(x => x === "TikTok").length;
+V.niTikTok = 100 * V.fiTikTok / N;
+V.mediaFest = mean(D.gasto_festivales);
+V.pctSobre = 100 * D.gasto_festivales.filter(x => x > V.mediaFest).length / N;
+V.p80Gaming = quantile(D.horas_gaming_sem, .8);
+V.p80Movil = quantile(D.horas_movil_dia, .8);
+const relTab = (s) => { const idx = D.sexo.map((x, i) => x === s ? i : -1).filter(i => i >= 0); return { n: idx.length, mono: idx.filter(i => D.relacion_preferida[i] === "Pareja monógama").length }; };
+V.mujer = relTab("Mujer"); V.hombre = relTab("Hombre");
+V.pctMonoM = 100 * V.mujer.mono / V.mujer.n; V.pctMonoH = 100 * V.hombre.mono / V.hombre.n;
+document.querySelectorAll("[data-v]").forEach(el => { const k = el.dataset.v; el.textContent = k === "mediaFest" ? fmt(V[k], 0) : V[k]; });
+
+/* ---------------- Gráficos SVG ---------------- */
+let W = 520;
+function ancho(el) { W = Math.round(Math.max(320, Math.min(640, el.clientWidth || 520))); }
+function niceTicks(lo, hi, n = 5) {
+  const span = hi - lo || 1, step0 = span / n, mag = 10 ** Math.floor(Math.log10(step0)), r = step0 / mag;
+  const step = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag; const out = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(+v.toFixed(10));
+  return out;
+}
+function svgWrap(h, inner, label) { return `<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="${esc(label)}">${inner}</svg>`; }
+function ejeX(sc, lo, hi, y, x0, x1, titulo) {
+  let s = `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="#98a2b3"/>`;
+  niceTicks(lo, hi).forEach(t => { const x = sc(t); if (x < x0 - 1 || x > x1 + 1) return; s += `<line x1="${x}" x2="${x}" y1="${y}" y2="${y + 5}" stroke="#98a2b3"/><text x="${x}" y="${y + 19}" font-size="13" text-anchor="middle" fill="#475467">${fmt(t, Number.isInteger(t) ? 0 : 1)}</text>`; });
+  if (titulo) s += `<text x="${(x0 + x1) / 2}" y="${y + 38}" font-size="13.5" text-anchor="middle" fill="#1d2939">${esc(titulo)}</text>`;
+  return s;
+}
+function lineaV(x, y0, y1, tipo) { return `<line x1="${x}" x2="${x}" y1="${y0}" y2="${y1}" stroke="${tipo === "media" ? "#0b4f8a" : "#b45309"}" stroke-width="3" ${tipo === "mediana" ? 'stroke-dasharray="7 5"' : ""}/>`; }
+
+function barras(el, labels, counts, titulo, destacar = []) {
+  ancho(el);
+  const fila = 34, h = 16 + labels.length * fila + 10, lw = Math.min(170, W * .38), x0 = lw + 8, x1 = W - 128, tot = sum(counts);
+  const pct = counts.map(c => 100 * c / tot), mx = Math.max(...pct), sx = v => x0 + v / mx * (x1 - x0);
+  let s = `<line x1="${x0}" x2="${x0}" y1="8" y2="${h - 8}" stroke="#98a2b3"/>`;
+  labels.forEach((l, i) => { const y = 14 + i * fila;
+    s += `<text x="${x0 - 8}" y="${y + 17}" font-size="13" text-anchor="end" fill="#1d2939">${esc(l.length > 24 ? l.slice(0, 23) + "…" : l)}</text>`;
+    const d = destacar.includes(i); s += `<rect x="${x0}" y="${y + 3}" width="${Math.max(1, sx(pct[i]) - x0)}" height="${fila - 10}" fill="${d ? "#003865" : "#6f9bcb"}"/><text x="${sx(pct[i]) + 6}" y="${y + 17}" font-size="12.5" fill="#344054" font-weight="${d ? 700 : 400}">${fmt(pct[i], 1)} % (${counts[i]})${d ? " · moda" : ""}</text>`; });
+  el.innerHTML = svgWrap(h, s, titulo || "Gráfico de barras");
+}
+function histograma(el, a, bins, titulo, lineas = true) {
+  ancho(el);
+  const h = 290, x0 = 46, x1 = W - 12, y0 = 14, y1 = h - 56, lo = Math.min(...a), hi = Math.max(...a), bw = (hi - lo) / bins || 1;
+  const c = Array(bins).fill(0); a.forEach(v => c[Math.min(bins - 1, Math.floor((v - lo) / bw))]++);
+  const mx = Math.max(...c) * 1.1, sx = v => x0 + (v - lo) / (hi - lo || 1) * (x1 - x0), sy = v => y1 - v / mx * (y1 - y0);
+  let s = `<line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#98a2b3"/>`;
+  niceTicks(0, mx, 4).forEach(t => s += `<text x="${x0 - 6}" y="${sy(t) + 4}" font-size="12" text-anchor="end" fill="#475467">${t}</text><line x1="${x0}" x2="${x1}" y1="${sy(t)}" y2="${sy(t)}" stroke="#eef0f3"/>`);
+  c.forEach((v, i) => s += `<rect x="${sx(lo + i * bw) + .5}" y="${sy(v)}" width="${Math.max(1, sx(lo + (i + 1) * bw) - sx(lo + i * bw) - 1)}" height="${y1 - sy(v)}" fill="#6f9bcb"/>`);
+  if (lineas) s += lineaV(sx(mean(a)), y0, y1, "media") + lineaV(sx(median(a)), y0, y1, "mediana");
+  s += ejeX(sx, lo, hi, y1, x0, x1, titulo);
+  s += `<text x="12" y="${(y0 + y1) / 2}" font-size="12.5" fill="#475467" transform="rotate(-90 12 ${(y0 + y1) / 2})" text-anchor="middle">Frecuencia</text>`;
+  el.innerHTML = svgWrap(h, s, "Histograma de " + titulo);
+}
+function cajas(el, grupos, titulo, tu = null) {
+  ancho(el);
+  const nombres = Object.keys(grupos), filas = nombres.length, alto = 62, h = 60 + filas * alto, x0 = nombres.length > 1 ? 70 : 20, x1 = W - 16;
+  const todos = nombres.flatMap(k => grupos[k]); let lo = Math.min(...todos), hi = Math.max(...todos);
+  if (tu !== null && isFinite(tu)) { lo = Math.min(lo, tu); hi = Math.max(hi, tu); }
+  const sx = v => x0 + (v - lo) / (hi - lo || 1) * (x1 - x0); let s = "";
+  nombres.forEach((k, i) => {
+    const a = grupos[k], q1 = quantile(a, .25), q2 = quantile(a, .5), q3 = quantile(a, .75), iqr = q3 - q1;
+    const wlo = Math.min(...a.filter(v => v >= q1 - 1.5 * iqr)), whi = Math.max(...a.filter(v => v <= q3 + 1.5 * iqr)), cy = 20 + i * alto + alto / 2;
+    if (filas > 1) s += `<text x="${x0 - 8}" y="${cy + 4}" font-size="13" text-anchor="end" fill="#1d2939">${esc(k)}</text>`;
+    s += `<line x1="${sx(wlo)}" x2="${sx(q1)}" y1="${cy}" y2="${cy}" stroke="#344054"/><line x1="${sx(q3)}" x2="${sx(whi)}" y1="${cy}" y2="${cy}" stroke="#344054"/>`;
+    s += `<line x1="${sx(wlo)}" x2="${sx(wlo)}" y1="${cy - 9}" y2="${cy + 9}" stroke="#344054"/><line x1="${sx(whi)}" x2="${sx(whi)}" y1="${cy - 9}" y2="${cy + 9}" stroke="#344054"/>`;
+    s += `<rect x="${sx(q1)}" y="${cy - 18}" width="${Math.max(1, sx(q3) - sx(q1))}" height="36" fill="#dbe7f5" stroke="#003865"/><line x1="${sx(q2)}" x2="${sx(q2)}" y1="${cy - 18}" y2="${cy + 18}" stroke="#003865" stroke-width="3.5"/>`;
+    a.filter(v => v < wlo || v > whi).forEach(v => s += `<circle cx="${sx(v)}" cy="${cy}" r="3.5" fill="none" stroke="#344054"/>`);
+  });
+  if (tu !== null && isFinite(tu)) { const x = sx(tu); s += `<path d="M${x} ${20 + alto / 2 - 26} l-8 -12 h16 z" fill="#b42318"/><text x="${x}" y="${20 + alto / 2 - 41}" font-size="13" font-weight="700" text-anchor="middle" fill="#b42318">Tú</text><line x1="${x}" x2="${x}" y1="${20 + alto / 2 - 24}" y2="${20 + alto / 2 + 24}" stroke="#b42318" stroke-width="2"/>`; }
+  s += ejeX(sx, lo, hi, 20 + filas * alto, x0, x1, titulo);
+  el.innerHTML = svgWrap(h, s, "Diagrama de caja de " + titulo);
+}
+function puntos(el, a, lo, hi, titulo, conMediana = true) {
+  ancho(el);
+  const h = 190, x0 = 20, x1 = W - 16, yb = 120, sx = v => x0 + (v - lo) / (hi - lo) * (x1 - x0), apil = new Map(); let s = "";
+  a.forEach(v => { const k = Math.round(sx(v) / 12); const n = apil.get(k) || 0; apil.set(k, n + 1); s += `<circle cx="${sx(v)}" cy="${yb - 9 - n * 15}" r="6.5" fill="#344054"/>`; });
+  s += lineaV(sx(mean(a)), 14, yb, "media"); if (conMediana) s += lineaV(sx(median(a)), 14, yb, "mediana");
+  s += ejeX(sx, lo, hi, yb, x0, x1, titulo);
+  el.innerHTML = svgWrap(h, s, "Gráfico de puntos de " + titulo);
+}
+function dispersion(el, x, y, tx, ty) {
+  ancho(el);
+  const h = 320, x0 = 50, x1 = W - 12, y0 = 12, y1 = h - 56, lx = Math.min(...x), hx = Math.max(...x), ly = Math.min(...y), hy = Math.max(...y);
+  const sx = v => x0 + (v - lx) / (hx - lx) * (x1 - x0), sy = v => y1 - (v - ly) / (hy - ly) * (y1 - y0);
+  let s = `<line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#98a2b3"/>`;
+  niceTicks(ly, hy, 4).forEach(t => s += `<text x="${x0 - 6}" y="${sy(t) + 4}" font-size="12" text-anchor="end" fill="#475467">${fmt(t, Number.isInteger(t) ? 0 : 1)}</text>`);
+  x.forEach((v, i) => s += `<circle cx="${sx(v)}" cy="${sy(y[i])}" r="4.5" fill="#0b4f8a" fill-opacity=".55"/>`);
+  s += ejeX(sx, lx, hx, y1, x0, x1, tx) + `<text x="12" y="${(y0 + y1) / 2}" font-size="12.5" fill="#475467" transform="rotate(-90 12 ${(y0 + y1) / 2})" text-anchor="middle">${esc(ty)}</text>`;
+  el.innerHTML = svgWrap(h, s, `Diagrama de dispersión de ${tx} y ${ty}`);
+}
+
+/* ---------------- Navegación ---------------- */
+let listo = false;
+const secciones = [...document.querySelectorAll("section.mision")];
+const tabs = $("#tabs");
+secciones.forEach((sec, i) => {
+  const b = document.createElement("button"); b.role = "tab"; b.textContent = sec.dataset.tab; b.dataset.id = sec.id;
+  b.setAttribute("aria-controls", sec.id); b.addEventListener("click", () => ir(sec.id)); tabs.appendChild(b);
+  const pasos = [...sec.querySelectorAll(".paso")];
+  if (pasos.length) {
+    const pills = document.createElement("div"); pills.className = "pills"; pills.setAttribute("role", "tablist");
+    pasos.forEach((p, j) => { const pb = document.createElement("button"); pb.role = "tab"; pb.textContent = p.dataset.paso; pb.addEventListener("click", () => verPaso(sec, j)); pills.appendChild(pb); });
+    sec.querySelector(".pasos").before(pills);
+    const nav = document.createElement("div"); nav.className = "nav-pasos";
+    nav.innerHTML = `<button class="btn" data-dir="-1">← Anterior</button><button class="btn prim" data-dir="1">Siguiente →</button>`;
+    nav.addEventListener("click", e => { const d = +e.target.dataset.dir; if (!d) return; const k = sec._paso + d; if (k >= 0 && k < pasos.length) { verPaso(sec, k); sec.scrollIntoView({ block: "start" }); } else if (k >= pasos.length && secciones[i + 1]) ir(secciones[i + 1].id); });
+    sec.querySelector(".pasos").after(nav); verPaso(sec, 0);
+  }
+});
+function verPaso(sec, j) {
+  sec._paso = j; const pasos = [...sec.querySelectorAll(".paso")];
+  pasos.forEach((p, k) => p.classList.toggle("activa", k === j));
+  [...sec.querySelector(".pills").children].forEach((b, k) => b.setAttribute("aria-selected", k === j));
+  const nav = sec.querySelector(".nav-pasos"); nav.children[0].disabled = j === 0;
+  nav.children[1].textContent = j === pasos.length - 1 ? "Siguiente misión →" : "Siguiente →";
+  dibujarVisibles();
+}
+function ir(id) {
+  secciones.forEach(s => s.classList.toggle("activa", s.id === id));
+  [...tabs.children].forEach(b => b.setAttribute("aria-selected", b.dataset.id === id));
+  window.scrollTo({ top: 0 });
+  if (id === "cierre") pintarCalibracion();
+  dibujarVisibles();
+}
+document.querySelectorAll("[data-ir]").forEach(b => b.addEventListener("click", () => ir(b.dataset.ir)));
+
+/* ---------------- Preguntas con confianza y escalera de ayudas ---------------- */
+const registro = [];
+const TIPOS = [["nom", "Cualitativa nominal"], ["ord", "Cualitativa ordinal"], ["disc", "Cuantitativa discreta"], ["cont", "Cuantitativa continua"]];
+const GRAF = [["barras", "Barras"], ["hist", "Histograma"], ["caja", "Caja y bigotes por grupos"], ["lineas", "Líneas"], ["disp", "Diagrama de dispersión / mapa de calor"]];
+const PG = { barras: "Las barras sirven para frecuencias de una variable cualitativa.", hist: "El histograma es para una sola variable cuantitativa.", caja: "La caja compara distribuciones cuantitativas entre grupos.", lineas: "Las líneas muestran cambios en momentos ordenados.", disp: "La dispersión relaciona dos variables cuantitativas." };
+
+const Q = {
+  m1_q1: { t: "Número de tatuajes que tienes.", op: TIPOS, c: "disc", e: "Se cuenta (0, 1, 2…) y no admite valores intermedios: cuantitativa discreta.",
+    h: ["¿Puedes tener 2,5 tatuajes?", "Hay números con distancias iguales y un cero real: es cuantitativa. ¿Se mide o se cuenta?"],
+    p: { ord: "Tiene orden, sí, pero además la distancia entre 1 y 2 tatuajes es la misma que entre 3 y 4.", cont: "Continua sería algo que admite decimales, como el tiempo." } },
+  m1_q2: { t: "Posición de tu equipo en la Liga F o en LaLiga al acabar la temporada (1º, 2º, 3º…).", op: TIPOS, c: "ord",
+    e: "Es ordinal: 1º va antes que 2º, pero la distancia entre posiciones no es constante (el 1º puede sacar 20 puntos al 2º, y el 2º solo 1 al 3º).",
+    h: ["Que se escriba con números no la hace cuantitativa. ¿Las distancias entre posiciones son iguales?", "Piensa en los puntos de diferencia entre el 1º y el 2º, y entre el 2º y el 3º."],
+    p: { disc: "Parece un número que se cuenta, pero es una posición en un orden.", nom: "Las categorías sí tienen un orden claro." } },
+  m1_q3: { t: "Red social favorita, codificada en la base de datos como 1 = Instagram, 2 = TikTok, 3 = WhatsApp…", op: TIPOS, c: "nom",
+    e: "Es nominal. El número es solo una etiqueta: TikTok no es «el doble» de Instagram. Un código numérico no convierte la variable en cuantitativa.",
+    h: ["¿Tendría sentido calcular la «red social media» = 2,4?", "¿Hay algún orden natural entre Instagram, TikTok y WhatsApp?"],
+    p: { disc: "Los números aquí son códigos, no cantidades.", ord: "El orden de los códigos es arbitrario: podríamos numerarlas al revés." } },
+  m1_q4: { t: "¿Qué porcentaje de la clase elige TikTok? (Es la <em>frecuencia relativa</em> en %: personas que lo eligen ÷ total × 100. Usa un decimal.)", num: true, ud: "%", c: +V.niTikTok.toFixed(1), tol: .15,
+    e: `ni = fi / n = ${V.fiTikTok} / 120 = ${fmt(V.fiTikTok / N, 3)} → ${fmt(V.niTikTok, 1)} %.`,
+    h: ["Divide la frecuencia absoluta entre el total y multiplica por 100.", `${V.fiTikTok} / 120 × 100 = ?`] },
+  m1_q5: { t: `En la clase hay ${V.mujer.n} mujeres y ${V.hombre.n} hombres. Para comparar qué modelo de relación prefieren, ¿qué porcentajes debes mirar?`,
+    op: [["col", "Porcentajes dentro de cada sexo (% por columna en esta tabla)"], ["fila", "Porcentajes dentro de cada modelo de relación (% por fila)"], ["total", "Porcentajes sobre el total de la clase"], ["rec", "Los recuentos directamente"]], c: "col",
+    e: "Como los grupos tienen tamaños muy distintos (hay casi cuatro veces más mujeres), hay que calcular el porcentaje dentro de cada grupo: «de las mujeres, ¿qué % prefiere…?» y «de los hombres, ¿qué % prefiere…?».",
+    h: ["Si un grupo es casi cuatro veces mayor, tendrá más casos en casi todas las casillas. ¿Cómo lo igualas?", "Quieres responder «de los hombres, ¿qué % prefiere pareja monógama?». ¿Cuál es el total de esa frase?"],
+    p: { rec: "Con recuentos, las mujeres «ganan» en casi todo solo porque son más.", fila: "Eso responde a otra pregunta: de quienes prefieren pareja monógama, ¿qué % son mujeres? Y ese % depende de que en Psicología haya más mujeres.", total: "El total mezcla los dos grupos y no permite compararlos." } },
+  m1_q6: { t: `En la clase, prefiere pareja monógama el ${fmt(V.pctMonoM, 0)} % de las mujeres y el ${fmt(V.pctMonoH, 0)} % de los hombres. ¿Qué conclusión es correcta?`,
+    op: [["a", "A los chicos no les interesan las relaciones estables"], ["b", "Todas las chicas de la clase prefieren una pareja monógama"], ["c", "En ambos grupos la opción mayoritaria es la misma; la diferencia es de unos 14 puntos y describe a los grupos, no a cada persona"], ["d", "Las mujeres prefieren la pareja monógama porque son más románticas"]], c: "c",
+    e: "La pareja monógama es la opción mayoritaria en los dos grupos. Un porcentaje describe a un grupo: dentro de cada grupo hay personas que prefieren cosas distintas. Y los datos descriptivos no explican el porqué.",
+    h: ["Mira el porcentaje de hombres que prefiere pareja monógama: ¿es una minoría?", "¿Dicen los datos algo sobre las causas de la diferencia?"],
+    p: { a: `Un ${fmt(V.pctMonoH, 0)} % de los hombres sí la prefiere: es la opción mayoritaria también entre ellos. Así nacen los estereotipos: convertir una diferencia de porcentajes en un rasgo de todo un grupo.`, b: `Es un ${fmt(V.pctMonoM, 0)} %, no un 100 %: hay chicas que prefieren otras opciones.`, d: "Esto es una explicación causal y un estereotipo. Una tabla descriptiva dice cuántas personas responden algo, no por qué." } },
+  m1_q7: { t: "El grupo «Otro / prefiere no decirlo» tiene 4 personas, y el 25 % prefiere «otros modelos». ¿Qué precaución hay que tener?",
+    op: [["a", "Ninguna: un porcentaje es un porcentaje"], ["b", "Con n = 4, una sola persona cambia el porcentaje 25 puntos: hay que dar siempre el n e interpretarlo con mucha cautela"], ["c", "Hay que eliminar ese grupo del análisis"]], c: "b",
+    e: "Con grupos tan pequeños, los porcentajes son muy inestables (una persona = 25 %). No se elimina a nadie: se informa del n y se evita sacar conclusiones fuertes.",
+    h: ["¿Cuánto cambia el porcentaje si una sola persona responde otra cosa?"],
+    p: { c: "Eliminar participantes invisibiliza a ese grupo. Basta con informar del n y ser prudente." } },
+
+  m2_q1: { t: "Calcula la mediana. Truco: como son 6 datos (número par), no hay una sola persona en el medio; haz la media de las dos del centro.", num: true, ud: "min", c: 40, tol: .01, e: "Ordenados: 20, 35, <strong>40, 40</strong>, 55, 250. Las dos del medio son la 3.ª y la 4.ª: (40 + 40) / 2 = 40 min.", h: ["Primero ordena de menor a mayor. Con 6 datos, las del medio son la 3.ª y la 4.ª.", "Suma los valores 3.º y 4.º y divide entre 2."] },
+  m2_q2: { t: "Calcula la media: suma todos los minutos y repártelos entre las 6 amigas (un decimal).", num: true, ud: "min", c: 73.3, tol: .1, e: "M = (20 + 35 + 40 + 40 + 55 + 250) / 6 = 440 / 6 ≈ 73,3 min.", h: ["Suma los seis valores y divide entre 6.", "La suma es 440."] },
+  m2_q3: { t: "¿Qué número describe mejor a una amiga «normal» de este grupo?", op: [["media", "La media (73,3 min)"], ["mediana", "La mediana (40 min)"], ["igual", "Las dos por igual"]], c: "mediana",
+    e: "La mediana (40 min) describe mejor a la amiga típica. La media (73,3 min) se va hacia el 250 y no se parece a nadie del grupo: 5 de las 6 amigas están por debajo.",
+    h: ["¿Cuántas amigas pasan más de 73,3 min en TikTok?", "Una sola persona puede «arrastrar» una de las dos medidas. ¿Cuál?"],
+    p: { media: "La media usa todos los valores, incluido el 250, que la arrastra hacia arriba.", igual: "Aquí son muy distintas: 40 frente a 73,3." },
+    alResolver: () => desbloquear("m2Explora") },
+  m2_q6: { t: "Imagina un examen muy difícil: casi todo el mundo saca notas bajas y solo unas pocas personas sacan notas altas. ¿Dónde quedará la media comparada con la mediana?",
+    op: [["encima", "Por encima de la mediana (hacia las notas altas)"], ["debajo", "Por debajo de la mediana"], ["igual", "En el mismo sitio"]], c: "encima",
+    e: "Las pocas notas altas forman una «cola» a la derecha que tira de la media hacia arriba, igual que la amiga del glamping. La mediana solo mira quién queda en el medio de la fila, así que apenas se mueve.",
+    h: ["Recuerda a la amiga del glamping: ¿qué medida se movía con los valores alejados?"],
+    p: { debajo: "Las notas bajas son muchas, pero están juntas; lo que mueve la media son los pocos valores muy alejados.", igual: "Solo coinciden cuando los datos están equilibrados a los dos lados." },
+    alResolver: () => desbloquear("m2Sesgo") },
+  m2_q4: { t: "Quieres resumir el «género musical favorito» de la clase (urbano, pop, indie, rock…). ¿Qué medida usarías?", op: [["media", "Media"], ["mediana", "Mediana"], ["moda", "Moda"]], c: "moda",
+    e: "Son categorías sin orden (variable nominal): no se pueden sumar ni ordenar, así que solo podemos decir cuál se repite más: la moda.", h: ["¿Se puede sumar «pop» + «rock»? ¿Hay un orden natural entre géneros?", "Solo una de las tres medidas funciona con categorías sin orden."],
+    p: { media: "Para la media hay que sumar, y los géneros musicales no se pueden sumar.", mediana: "Para la mediana hay que poner los datos en fila de menor a mayor, y los géneros no tienen un orden." },
+    alResolver: () => desbloquear("m2ModaBox") },
+  m2_q5: { t: "Quieres resumir la «ansiedad ante los exámenes» (nada, poco, bastante, mucho). ¿Qué medida es la más informativa que puedes usar bien?", op: [["media", "Media"], ["mediana", "Mediana"], ["ninguna", "Ninguna, porque son palabras y no números"]], c: "mediana",
+    e: "Son categorías con orden (variable ordinal): podemos poner a la clase en fila de «nada» a «mucho» y mirar quién queda en el medio. Esa es la mediana. La media no sirve: no sabemos si de «poco» a «bastante» hay la misma distancia que de «bastante» a «mucho».",
+    h: ["Las categorías tienen orden. ¿Qué medida necesita poder ordenar, pero no sumar?", "La moda también valdría, pero hay otra que aprovecha el orden."],
+    p: { media: "Para la media habría que sumar categorías, y no sabemos cuánto «vale» cada una.", ninguna: "Las categorías también se resumen: con la moda siempre y, si tienen orden, con la mediana." },
+    alResolver: () => desbloquear("m2OrdBox") },
+
+  m3_q1: { t: "Tu nota de admisión (PAU) está en el P90 de tu clase. ¿Qué significa?", op: [["a", "Que sacaste un 9"], ["b", "Que acertaste el 90 % del examen"], ["c", "Que tu nota es igual o superior a la de ≈90 % de la clase"], ["d", "Que el 90 % de la clase sacó más nota que tú"]], c: "c",
+    e: "El percentil indica posición relativa: tu nota es igual o superior a la de aproximadamente el 90 % de tu clase. No dice qué nota sacaste ni cuántas preguntas acertaste.",
+    h: ["Un percentil compara tu dato con los del grupo.", "¿Qué parte del grupo queda por debajo de ti en el P90?"],
+    p: { a: "El percentil no es la nota: en una clase muy buena, el P90 podría ser un 13.", b: "Confundes percentil con porcentaje de aciertos, un error muy frecuente.", d: "Es al revés: el 90 % queda en tu nivel o por debajo." } },
+  m3_q2: { t: "Calcula Q2 (la mediana). Recuerda: primero ordena.", num: true, ud: "cafés", c: 2.5, tol: .01, e: "Ordenados: 0, 1, 2, <strong>2, 3</strong>, 4, 5, 9. Con n = 8, Q2 = (2 + 3) / 2 = 2,5 cafés.", h: ["Ordena: 0, 1, 2, 2, 3, 4, 5, 9.", "n es par: media de los valores en 4.ª y 5.ª posición."] },
+  m3_q3: { t: `En la clase, el P80 de horas de videojuegos es ${fmt(V.p80Gaming, 0)} h y el P80 de horas de móvil es ${fmt(V.p80Movil, 1)} h. ¿Podemos decir que el 80 % juega ${fmt(V.p80Gaming, 0)} h o menos <em>y a la vez</em> usa el móvil ${fmt(V.p80Movil, 1)} h o menos?`,
+    op: [["si", "Sí, porque ambos son el P80"], ["no", "No: cada percentil describe una variable por separado"], ["media", "Solo si las dos variables tienen la misma media"]], c: "no",
+    e: "Cada percentil se calcula por separado; las personas que quedan por debajo del P80 en videojuegos no tienen por qué ser las mismas que en móvil. La tabla no da información conjunta.",
+    h: ["¿Las personas por debajo del P80 en videojuegos son necesariamente las mismas que en móvil?"], p: { si: "Que el número del percentil coincida no significa que hable de las mismas personas." } },
+
+  m4_q1: { t: "Calcula la suma de las diferencias al cuadrado del grupo B.", num: true, ud: "h²", c: 28, tol: .01, e: "9 + 4 + 1 + 1 + 4 + 9 = 28 h².", h: ["Eleva al cuadrado cada diferencia: (−3)² = 9.", "Los cuadrados son 9, 4, 1, 1, 4 y 9."] },
+  m4_q2: { t: "Calcula la desviación típica poblacional del grupo B: σ = √(suma / 6). Dos decimales.", num: true, ud: "h", c: 2.16, tol: .02,
+    e: "σ² = 28 / 6 ≈ 4,67 h² → σ = √4,67 ≈ 2,16 h. El grupo B está mucho más disperso que el A (0,58 h), aunque las medias coinciden.", h: ["Primero divide 28 entre 6; después haz la raíz cuadrada.", "28 / 6 ≈ 4,67. ¿Cuánto es √4,67?"] },
+  m4_q3: { t: "Dos grupos de 1º tienen la misma nota media en Fundamentos (M = 7). En el grupo A, DT = 0,5; en el grupo B, DT = 2. ¿En qué grupo es más probable encontrar a la vez un 3 y un 10?", op: [["A", "En el grupo A"], ["B", "En el grupo B"], ["igual", "Igual en los dos: tienen la misma media"]], c: "B",
+    e: "Con DT = 2 las notas se separan mucho más de la media, así que es más probable encontrar notas tan alejadas como un 3 y un 10. Con DT = 0,5 casi todo el grupo está entre 6 y 8.",
+    h: ["¿Qué indica una DT grande sobre lo lejos que están los datos de la media?"], p: { igual: "La media no informa de la dispersión: esa es la idea central de esta misión." } },
+  m4_q4: { t: "¿Puede la desviación típica ser negativa?", op: [["si", "Sí, si la mayoría de datos están por debajo de la media"], ["no", "No: es la raíz de una media de cuadrados; como mínimo vale 0"], ["neg", "Solo con variables que tienen valores negativos"]], c: "no",
+    e: "La varianza es una media de cuadrados (nunca negativa) y la DT es su raíz positiva. Vale 0 solo si todos los datos son iguales.", h: ["¿Qué pasa al elevar al cuadrado un número negativo?"],
+    p: { si: "Las diferencias negativas se elevan al cuadrado y pasan a ser positivas.", neg: "Aunque los datos sean negativos, las diferencias al cuadrado siempre son ≥ 0." } },
+
+  m5_q1: { t: "En un grupo, casi todo el mundo duerme unas 7 h, pero unas pocas personas duermen 3 h o 11 h. Comparado con la normal, ¿qué curtosis esperas?", op: [["lepto", "Leptocúrtica: más peso en valores muy alejados"], ["meso", "Mesocúrtica: igual que la normal"], ["plati", "Platicúrtica: menos peso en los extremos"]], c: "lepto",
+    e: "Unos pocos valores muy alejados de la media dan colas pesadas: mayor curtosis que la normal (leptocúrtica). La curtosis es muy sensible a esos pocos casos extremos.", h: ["La curtosis se fija sobre todo en el peso de los valores muy alejados del centro."],
+    p: { plati: "La platicúrtica tiene menos peso en los extremos; aquí hay casos extremos llamativos." } },
+  m5_q2: { t: "Con M = 50 y DT = 10, ¿qué porcentaje aproximado de personas puntúa entre 40 y 60?", op: [["34", "≈ 34 %"], ["50", "≈ 50 %"], ["68", "≈ 68 %"], ["95", "≈ 95 %"]], c: "68",
+    e: "Entre M − 1 DT y M + 1 DT (40 y 60) queda aproximadamente el 68 % en una distribución normal; entre M ± 2 DT (30 y 70), el 95 %.",
+    h: ["40 y 60 están a una desviación típica de la media.", "Mueve el deslizador a 40 y a 60 y resta las áreas."], p: { "34": "34 % es solo un lado: de 50 a 60.", "95": "95 % corresponde a ±2 DT (de 30 a 70)." } },
+  m5_q3: { t: "Alguien saca 70 puntos. ¿Cuál es su puntuación z?", num: true, c: 2, tol: .01, e: "z = (70 − 50) / 10 = 2. Está 2 desviaciones típicas por encima de la media (≈ percentil 98).", h: ["z = (puntuación − media) / DT."] },
+
+  m6_q1: { t: "¿Qué red social prefiere la clase?", op: GRAF, c: "barras", e: "Red social favorita es nominal: barras con frecuencias o porcentajes (o sectores si hay pocas categorías).", h: ["¿Qué tipo de variable es «red social favorita»?"], p: PG },
+  m6_q2: { t: "¿Cómo se distribuyen las horas de sueño entre semana?", op: GRAF, c: "hist", e: "Horas de sueño es cuantitativa continua: el histograma muestra centro, dispersión y forma.", h: ["Una sola variable cuantitativa: ¿qué gráfico muestra su forma?"], p: PG },
+  m6_q3: { t: "¿Usan más el móvil quienes hacen «previa» antes de salir que quienes no?", op: GRAF, c: "caja", e: "Comparas una variable cuantitativa (horas de móvil) entre dos grupos: diagramas de caja en paralelo.", h: ["Una variable cuantitativa y una variable de grupo."], p: PG },
+  m6_q4: { t: "¿Cómo cambia el estrés medio de la clase semana a semana durante el cuatrimestre?", op: GRAF, c: "lineas", e: "Una medida que evoluciona en momentos ordenados (semanas): gráfico de líneas.", h: ["El eje horizontal es el tiempo."], p: PG },
+  m6_q5: { t: "¿Duermen menos quienes más horas pasan con el móvil?", op: GRAF, c: "disp", e: "Relación entre dos variables cuantitativas: diagrama de dispersión (o mapa de calor si hay muchos datos). Asociación no es causalidad.", h: ["Dos variables cuantitativas medidas en las mismas personas."], p: PG },
+  m6_q6: { t: "¿Qué hace que el gráfico publicado sea engañoso?", op: [["col", "Los colores de las barras"], ["eje", "El eje vertical no empieza en 0 y exagera una diferencia de 4 puntos"], ["sect", "Que usa barras en lugar de sectores"], ["nada", "Nada, los datos son correctos"]], c: "eje",
+    e: "Con el eje empezando en 56 %, una diferencia de 4 puntos (62 % frente a 58 %) parece enorme. Con el eje desde 0 se ve su tamaño real.", h: ["Mira los números del eje vertical en los dos gráficos."],
+    p: { nada: "Los datos pueden ser correctos y el gráfico, engañoso.", sect: "Las barras son adecuadas aquí; el problema está en otra parte." } },
+
+  rf_q1: { t: "Calcula la media.", num: true, ud: "€", c: 29, tol: .05, e: "Suma = 5 + 10 + 20 + 400 = 435; M = 435 / 15 = 29 €.", h: ["Suma todos los valores (los ceros no suman) y divide entre 15.", "La suma es 435."] },
+  rf_q2: { t: "Calcula la mediana.", num: true, ud: "€", c: 0, tol: .01, e: "Con 15 datos, la mediana es el 8.º valor ordenado: 0 €. Al menos la mitad del grupo no gastó nada.", h: ["n = 15 es impar: la mediana ocupa la posición (15 + 1) / 2.", "¿Cuál es el valor en la posición 8?"] },
+  rf_q3: { t: "Un medio titula: «Los jóvenes se gastan 29 € al mes en apuestas». ¿Cuál es el principal problema?",
+    op: [["nada", "Ninguno: 29 € es la media correcta"], ["media", "La media está inflada por una sola persona; la mayoría gasta 0 € y la mediana es 0 €"], ["moda", "Deberían haber usado la moda, que es 400 €"], ["var", "Deberían haber dado la varianza en lugar de la media"]], c: "media",
+    e: "Una persona con 400 € explica casi todo el total. La mediana (0 €) y el porcentaje de quienes apuestan (4 de 15) describen mejor la situación.",
+    h: ["¿Cuántas personas gastaron 29 € o más? ¿Qué pasaría si quitas a la de 400 €?"],
+    p: { nada: "El cálculo es correcto, pero ¿describe a una persona joven típica?", moda: "La moda es 0 €, el valor más repetido.", var: "La varianza informaría de la dispersión, pero sola no resume el centro." } }
+};
+
+let contador = 0;
+document.querySelectorAll(".q[data-q]").forEach(box => {
+  const id = box.dataset.q, q = Q[id]; if (!q) return; const u = "q" + (contador++);
+  const nombreMision = box.closest("section").dataset.tab;
+  const resp = q.num
+    ? `<p><label for="${u}n" class="oculto">Tu respuesta</label><input type="text" class="numq" id="${u}n" inputmode="decimal" autocomplete="off"> ${q.ud ? esc(q.ud) : ""}</p>`
+    : q.op.map(([v, l]) => `<label class="op"><input type="radio" name="${u}" value="${esc(v)}"> <span>${esc(l)}</span></label>`).join("");
+  box.innerHTML = `<fieldset><legend>${q.t}</legend>${resp}</fieldset>
+    <div class="conf" role="radiogroup" aria-label="Seguridad en tu respuesta"><span>Antes de comprobar: ¿cómo de seguro/a estás?</span>
+      ${["Seguro/a", "Dudo", "Adivino"].map(c => `<label><input type="radio" name="${u}c" value="${c}"> ${c}</label>`).join("")}</div>
+    <button class="btn prim">Comprobar</button><div class="fbq" aria-live="polite"></div>`;
+  let intentos = 0; const fb = box.querySelector(".fbq");
+  const caja = (cl, tit, txt) => fb.innerHTML = `<div class="fb ${cl}"><strong>${tit}</strong> ${txt}</div>`;
+  box.querySelector("button").addEventListener("click", () => {
+    let r;
+    if (q.num) { const raw = box.querySelector("input.numq").value.replace(",", "."); r = raw === "" ? null : parseFloat(raw); if (r !== null && isNaN(r)) r = null; }
+    else { const s = box.querySelector(`input[name=${u}]:checked`); r = s ? s.value : null; }
+    if (r === null) return caja("fb-pista", "Falta tu respuesta.", "Elige o escribe algo antes de comprobar: equivocarse aquí no cuenta para nota.");
+    const conf = box.querySelector(`input[name=${u}c]:checked`);
+    if (!conf) return caja("fb-pista", "Un paso más.", "Indica primero tu seguridad. Al final verás si tu confianza encaja con tus aciertos.");
+    intentos++;
+    const ok = q.num ? Math.abs(r - q.c) <= q.tol : r === q.c;
+    if (intentos === 1 && !registro.some(x => x.id === id)) registro.push({ id, mision: nombreMision, acierto: ok, confianza: conf.value, texto: q.t.replace(/<[^>]+>/g, "") });
+    const resolver = () => { if (!box._resuelta) { box._resuelta = true; if (q.alResolver) q.alResolver(); } };
+    if (ok) { caja("fb-ok", "Correcto.", q.e); resolver(); }
+    else if (intentos === 1) caja("fb-no", "Todavía no.", (q.p && q.p[r] ? q.p[r] + "<br>" : "") + "<em>Pista:</em> " + (q.h?.[0] || "Revisa el razonamiento e inténtalo otra vez."));
+    else if (intentos === 2 && q.h?.length > 1) caja("fb-pista", "Segunda pista:", q.h[1]);
+    else { caja("fb-sol", "Solución explicada:", q.e); resolver(); }
+  });
+});
+
+/* ---------------- Inicio: predicción ---------------- */
+let prediccion = null;
+$("#predInicio").addEventListener("input", e => $("#predVal").textContent = e.target.value + " %");
+$("#guardarPred").addEventListener("click", () => {
+  prediccion = +$("#predInicio").value;
+  $("#predFb").innerHTML = `<div class="fb fb-pista"><strong>Predicción guardada: ${prediccion} %.</strong> Lo descubrirás en la Misión 5. Mientras tanto, piensa: ¿por qué has elegido ese número?</div>`;
+});
+
+/* ---------------- Misión 1 ---------------- */
+function m1Tabla() {
+  const v = $("#m1Var").value, niv = NIVELES[v], fi = contar(v, niv), acum = $("#m1Acum").checked;
+  let F = 0, html = `<table class="t"><tr><th>Categoría</th><th>fi</th><th>ni (%)</th>${acum ? "<th>Fi</th><th>Ni (%)</th>" : ""}</tr>`;
+  niv.forEach((l, i) => { F += fi[i]; html += `<tr><td>${esc(l)}</td><td>${fi[i]}</td><td>${fmt(100 * fi[i] / N, 1)}</td>${acum ? `<td>${F}</td><td>${fmt(100 * F / N, 1)}</td>` : ""}</tr>`; });
+  html += `<tr><td><strong>Total</strong></td><td><strong>${N}</strong></td><td><strong>100,0</strong></td>${acum ? "<td></td><td></td>" : ""}</tr></table>`;
+  $("#m1Tabla").innerHTML = html;
+  $("#m1Aviso").innerHTML = acum && v !== "ansiedad_examenes" ? `<div class="fb fb-pista"><strong>Cuidado:</strong> esta variable es nominal; el orden de las categorías es arbitrario, así que las frecuencias acumuladas no significan nada.</div>` : "";
+  barras($("#m1Barras"), niv, fi, "Distribución de " + $("#m1Var").selectedOptions[0].text);
+}
+function m1Conting() {
+  const rel = $("#m1Cruce").value === "rel";
+  const fv = rel ? "relacion_preferida" : "ansiedad_examenes", cv = rel ? "sexo" : "estudia_y_trabaja";
+  const filas = NIVELES[fv], cols = rel ? ["Mujer", "Hombre", "Otro / prefiere no decirlo"] : ["Sí", "No"];
+  const t = filas.map(f => cols.map(c => D[fv].filter((x, i) => x === f && D[cv][i] === c).length));
+  const totC = cols.map((_, j) => sum(t.map(r => r[j]))), totF = t.map(r => sum(r)), modo = $("#m1Pct").value;
+  const val = (i, j) => modo === "rec" ? t[i][j] : fmt(100 * t[i][j] / (modo === "col" ? totC[j] : modo === "fila" ? totF[i] : N), 1) + " %";
+  let h = `<table class="t"><tr><th>${rel ? "Modelo de relación \\ Sexo" : "Ansiedad \\ ¿Estudia y trabaja?"}</th>${cols.map(c => `<th>${esc(c)}</th>`).join("")}${modo === "fila" || modo === "rec" ? "<th>Total fila</th>" : ""}</tr>`;
+  filas.forEach((f, i) => h += `<tr><td>${esc(f)}</td>${cols.map((_, j) => `<td>${val(i, j)}</td>`).join("")}${modo === "rec" ? `<td>${totF[i]}</td>` : modo === "fila" ? "<td>100 %</td>" : ""}</tr>`);
+  h += `<tr><td><em>n del grupo</em></td>${totC.map(x => `<td><em>${x}</em></td>`).join("")}${modo === "fila" || modo === "rec" ? `<td><em>${N}</em></td>` : ""}</tr></table>`;
+  $("#m1Conting").innerHTML = h;
+}
+["#m1Var", "#m1Acum"].forEach(s => $(s).addEventListener("change", m1Tabla));
+["#m1Cruce", "#m1Pct"].forEach(s => $(s).addEventListener("change", m1Conting));
+
+/* ---------------- Misión 2 ---------------- */
+function desbloquear(id) {
+  $("#" + id).classList.remove("oculto");
+  const l = $("#" + id + "Lock"); if (l) l.classList.add("oculto");
+  dibujarVisibles();
+}
+function qnorm(p) { // aproximación de Acklam
+  const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239],
+        b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572],
+        c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783],
+        d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416], pl = 0.02425;
+  if (p < pl) { const q = Math.sqrt(-2 * Math.log(p)); return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+  if (p > 1 - pl) return -qnorm(1 - p);
+  const q = p - .5, r = q * q; return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q / (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+}
+const COL_MO = "#5b3fa8";
+function modaInfo(a) { const c = new Map(); a.forEach(v => c.set(v, (c.get(v) || 0) + 1)); const mx = Math.max(...c.values()); return { mx, modas: mx > 1 ? [...c].filter(e => e[1] === mx).map(e => e[0]) : [] }; }
+const txtModa = (a, ud) => { const m = modaInfo(a); return m.modas.length ? m.modas.map(v => fmt(v, 0)).join(" y ") + " " + ud + (m.modas.length > 1 ? " (dos o más modas)" : "") : "no hay (ningún valor se repite)"; };
+
+/* Gráfico de puntos sobre un balancín: la media es el punto de equilibrio */
+function tcPlot(el, a, lo, hi, titulo) {
+  ancho(el);
+  const x0 = 24, x1 = W - 16, step = 14, sx = v => x0 + (Math.min(Math.max(v, lo), hi) - lo) / (hi - lo) * (x1 - x0), clave = v => Math.round(sx(v) / 13);
+  const cuenta = new Map(); a.forEach(v => cuenta.set(clave(v), (cuenta.get(clave(v)) || 0) + 1));
+  const maxN = Math.max(...cuenta.values()), yb = Math.max(130, 62 + maxN * step), h = yb + 88;
+  const pil = new Map(); let s = "";
+  sorted(a).forEach(v => { const k = clave(v), n = pil.get(k) || 0; pil.set(k, n + 1); s += `<circle cx="${sx(v)}" cy="${yb - 9 - n * step}" r="6.5" fill="#344054"/>`; });
+  const m = mean(a), md = median(a), xm = sx(m), xmd = sx(md), cerca = Math.abs(xm - xmd) < 70;
+  s += `<line x1="${x0}" x2="${x1}" y1="${yb + 1}" y2="${yb + 1}" stroke="#667085" stroke-width="3"/>`;
+  s += `<polygon points="${xm},${yb + 3} ${xm - 11},${yb + 22} ${xm + 11},${yb + 22}" fill="#0b4f8a"/>`;
+  s += `<line x1="${xmd}" x2="${xmd}" y1="34" y2="${yb}" stroke="#b45309" stroke-width="3" stroke-dasharray="7 5"/><text x="${xmd}" y="${cerca ? 14 : 28}" font-size="13" font-weight="700" text-anchor="${xmd < x0 + 40 ? "start" : "middle"}" fill="#b45309">Mdn ${fmt(md, 1)}</text>`;
+  s += `<line x1="${xm}" x2="${xm}" y1="34" y2="${yb}" stroke="#0b4f8a" stroke-width="3"/><text x="${xm}" y="28" font-size="13" font-weight="700" text-anchor="${xm < x0 + 40 ? "start" : "middle"}" fill="#0b4f8a">M ${fmt(m, 1)}</text>`;
+  const mo = modaInfo(a), hechos = new Set();
+  if (mo.modas.length && mo.modas.length <= 3) mo.modas.forEach(v => { const k = clave(v); if (hechos.has(k)) return; hechos.add(k);
+    s += `<text x="${sx(v) + 11}" y="${yb - 9 - (cuenta.get(k) - 1) * step + 4}" font-size="12.5" font-weight="700" fill="${COL_MO}">Mo</text>`; });
+  s += ejeX(sx, lo, hi, yb + 30, x0, x1, titulo);
+  el.innerHTML = svgWrap(h, s, "Gráfico de puntos con la media como punto de equilibrio: " + titulo);
+}
+
+/* Paso 1: ejemplo resuelto */
+function m2Ej() { tcPlot($("#m2Ej"), [45, 50, 50, 60, 70], 40, 75, "Precio de la entrada (€)"); }
+
+/* Paso 2: laboratorio de las seis amigas */
+const TIKTOK0 = [20, 35, 40, 40, 55, 250];
+$("#m2ExSliders").innerHTML = TIKTOK0.map((v, i) => `<div class="ctrl"><label for="m2x${i}">Amiga ${i + 1}: <span id="m2xv${i}">${v}</span> min</label><input type="range" id="m2x${i}" min="0" max="300" step="5" value="${v}"></div>`).join("");
+document.querySelectorAll("#m2ExSliders input, input[name=m2Reto]").forEach(el => el.addEventListener("input", m2Ex));
+document.querySelectorAll("input[name=m2Reto]").forEach(el => el.addEventListener("change", m2Ex));
+$("#m2ExReset").addEventListener("click", () => { TIKTOK0.forEach((v, i) => $("#m2x" + i).value = v); m2Ex(); });
+function m2Ex() {
+  const a = TIKTOK0.map((_, i) => +$("#m2x" + i).value); a.forEach((v, i) => $("#m2xv" + i).textContent = v);
+  tcPlot($("#m2ExPlot"), a, 0, 300, "Minutos en TikTok ayer");
+  const m = mean(a), md = median(a);
+  $("#m2ExStats").innerHTML = `<strong>Media:</strong> ${fmt(m, 1)} min · <strong>Mediana:</strong> ${fmt(md, 1)} min · <strong>Moda:</strong> ${txtModa(a, "min")}`;
+  const reto = document.querySelector("input[name=m2Reto]:checked").value, mo = modaInfo(a);
+  const ok = { a: Math.abs(m - md) < .5, b: m > 100 && md < 50, c: mo.modas.length === 2 }[reto];
+  const pista = { a: "Coloca los datos de forma equilibrada a los dos lados del centro, por ejemplo 20, 30, 40, 50, 60 y 70.", b: "Deja a cuatro amigas con pocos minutos y sube muchísimo a una o dos.", c: "Pon dos parejas de amigas con los mismos minutos, y que no haya ningún otro valor repetido tantas veces." }[reto];
+  $("#m2ExReto").innerHTML = ok ? `<div class="fb fb-ok"><strong>¡Reto conseguido!</strong> ${reto === "b" ? "¿Ves cómo la media puede describir a alguien que no existe en el grupo?" : reto === "a" ? "Cuando los datos están equilibrados a los dos lados, la media y la mediana coinciden." : "Un grupo puede tener más de una moda."}</div>`
+    : `<div class="fb fb-pista"><strong>Aún no.</strong> <em>Pista:</em> ${pista}</div>`;
+}
+
+/* Paso 3: la amiga del glamping */
+const BASE_FEST = [80, 90, 95, 100, 110, 120, 120, 130, 140];
+document.querySelectorAll("input[name=m2Pred]").forEach(r => r.addEventListener("change", () => desbloquear("m2Lab")));
+$("#m2Ext").addEventListener("input", m2);
+function m2() {
+  const e = +$("#m2Ext").value, a = [...BASE_FEST, e]; $("#m2ExtVal").textContent = fmt(e, 0);
+  tcPlot($("#m2Plot"), a, 50, 2050, "Gasto en el festival (€)");
+  $("#m2Stats").innerHTML = `<strong>Media:</strong> ${fmt(mean(a), 1)} € · <strong>Mediana:</strong> ${fmt(median(a), 1)} € · <strong>Moda:</strong> ${txtModa(a, "€")}`;
+  const pred = document.querySelector("input[name=m2Pred]:checked")?.value;
+  $("#m2Fb").innerHTML = e < 300 ? `<p class="nota">Mueve el deslizador hacia la derecha y observa el triángulo de equilibrio.</p>` : pred === "media"
+    ? `<div class="fb fb-ok"><strong>Tu predicción se cumple.</strong> Una sola persona muy alejada arrastra la media (el triángulo se desplaza para que el balancín no se caiga). La mediana y la moda casi no se mueven.</div>`
+    : `<div class="fb fb-pista"><strong>Compara con tu predicción.</strong> La mediana y la moda casi no cambian, pero la media sube con cada euro de la décima amiga. La media usa el valor de cada dato; la mediana solo mira quién está en el medio de la fila.</div>`;
+}
+
+/* Paso 4: simulador de exámenes (asimetría) */
+$("#m2S").addEventListener("input", m2Sesgo);
+function notasSesgo(s) {
+  const n = 200, a = s * .8, out = [];
+  for (let i = 0; i < n; i++) { const z = qnorm((i + .5) / n), g = Math.abs(a) < 1e-6 ? z : (Math.exp(a * z) - 1) / a; out.push(Math.min(100, Math.max(0, 50 - 15 * s + 10 * g))); }
+  return out;
+}
+function m2Sesgo() {
+  const s = +$("#m2S").value, a = notasSesgo(s), el = $("#m2SPlot");
+  $("#m2SVal").textContent = s > .15 ? "difícil" : s < -.15 ? "fácil" : "equilibrado";
+  ancho(el);
+  const h = 280, x0 = 40, x1 = W - 12, y0 = 52, y1 = h - 56, bins = 25, bw = 4, c = Array(bins).fill(0);
+  a.forEach(v => c[Math.min(bins - 1, Math.floor(v / bw))]++);
+  const k = c.indexOf(Math.max(...c)), mo = k * bw + bw / 2, m = mean(a), md = median(a);
+  const mx = Math.max(...c) * 1.05, sx = v => x0 + v / 100 * (x1 - x0), sy = v => y1 - v / mx * (y1 - y0);
+  let sv = "";
+  c.forEach((v, i) => sv += `<rect x="${sx(i * bw) + .5}" y="${sy(v)}" width="${sx(bw) - sx(0) - 1}" height="${y1 - sy(v)}" fill="${i === k ? "#9e8bd1" : "#6f9bcb"}"/>`);
+  sv += `<line x1="${sx(mo)}" x2="${sx(mo)}" y1="${y0 - 8}" y2="${y1}" stroke="${COL_MO}" stroke-width="3" stroke-dasharray="2 4"/><text x="${sx(mo)}" y="40" font-size="13" font-weight="700" text-anchor="middle" fill="${COL_MO}">Mo</text>`;
+  sv += `<line x1="${sx(md)}" x2="${sx(md)}" y1="${y0 - 22}" y2="${y1}" stroke="#b45309" stroke-width="3" stroke-dasharray="7 5"/><text x="${sx(md)}" y="26" font-size="13" font-weight="700" text-anchor="middle" fill="#b45309">Mdn</text>`;
+  sv += `<line x1="${sx(m)}" x2="${sx(m)}" y1="${y0 - 36}" y2="${y1}" stroke="#0b4f8a" stroke-width="3"/><text x="${sx(m)}" y="12" font-size="13" font-weight="700" text-anchor="middle" fill="#0b4f8a">M</text>`;
+  sv += ejeX(sx, 0, 100, y1, x0, x1, "Nota del examen");
+  el.innerHTML = svgWrap(h, sv, "Histograma de notas con media, mediana y moda");
+  const orden = s > .15 ? `<strong>Examen difícil:</strong> la mayoría saca notas bajas y unas pocas personas sacan notas altas (cola hacia la derecha). Fíjate en el orden: <strong>moda &lt; mediana &lt; media</strong>. La cola «tira» de la media hacia arriba.`
+    : s < -.15 ? `<strong>Examen fácil:</strong> la mayoría saca notas altas y unas pocas suspenden con notas muy bajas (cola hacia la izquierda). Ahora el orden se invierte: <strong>media &lt; mediana &lt; moda</strong>. La cola «tira» de la media hacia abajo.`
+    : `<strong>Examen equilibrado:</strong> las notas se reparten casi igual a los dos lados, así que <strong>media, mediana y moda casi coinciden</strong>.`;
+  $("#m2SStats").innerHTML = `Media = ${fmt(m, 1)} · Mediana = ${fmt(md, 1)} · Moda ≈ ${fmt(mo, 0)} (centro de la barra más alta)<br>${orden}`;
+}
+
+/* Paso 5: moda (nominal) y mediana (ordinal) */
+function m2Moda() { const niv = NIVELES.genero_musical, c = contar("genero_musical", niv), mx = Math.max(...c); barras($("#m2ModaPlot"), niv, c, "Género musical favorito", c.map((v, i) => v === mx ? i : -1).filter(i => i >= 0)); }
+const ORD0 = contar("ansiedad_examenes", NIVELES.ansiedad_examenes);
+$("#m2OrdSliders").innerHTML = NIVELES.ansiedad_examenes.map((l, i) => `<div class="ctrl"><label for="m2o${i}">${l}: <span id="m2ov${i}">${ORD0[i]}</span> personas</label><input type="range" id="m2o${i}" min="0" max="80" step="1" value="${ORD0[i]}"></div>`).join("");
+document.querySelectorAll("#m2OrdSliders input").forEach(el => el.addEventListener("input", m2Ord));
+function m2Ord() {
+  const lab = NIVELES.ansiedad_examenes, c = lab.map((_, i) => +$("#m2o" + i).value), n = sum(c), el = $("#m2OrdPlot");
+  c.forEach((v, i) => $("#m2ov" + i).textContent = v);
+  if (!n) { el.innerHTML = ""; $("#m2OrdTxt").innerHTML = `<div class="fb fb-pista">Pon al menos una persona en alguna categoría.</div>`; return; }
+  ancho(el);
+  const x0 = 10, x1 = W - 10, h = 150, col = ["#dbe7f5", "#a9c4e4", "#5f8fc4", "#003865"], txt = ["#1d2939", "#1d2939", "#fff", "#fff"], sx = p => x0 + p * (x1 - x0);
+  let acc = 0, s = "";
+  c.forEach((v, i) => { const a0 = acc / n, a1 = (acc + v) / n; acc += v; const w = sx(a1) - sx(a0);
+    if (v) s += `<rect x="${sx(a0)}" y="40" width="${w}" height="54" fill="${col[i]}" stroke="#fff" stroke-width="1.5"/>`;
+    if (w > 58) s += `<text x="${(sx(a0) + sx(a1)) / 2}" y="63" font-size="12.5" font-weight="700" text-anchor="middle" fill="${txt[i]}">${lab[i]}</text><text x="${(sx(a0) + sx(a1)) / 2}" y="81" font-size="12" text-anchor="middle" fill="${txt[i]}">${fmt(100 * v / n, 0)} %</text>`; });
+  s += `<line x1="${sx(.5)}" x2="${sx(.5)}" y1="26" y2="104" stroke="#b42318" stroke-width="3" stroke-dasharray="6 4"/><text x="${sx(.5)}" y="18" font-size="13" font-weight="700" text-anchor="middle" fill="#b42318">50 %: la persona del medio</text>`;
+  [0, .25, .5, .75, 1].forEach(p => s += `<text x="${sx(p)}" y="${124}" font-size="12" text-anchor="${p === 0 ? "start" : p === 1 ? "end" : "middle"}" fill="#475467">${p * 100} %</text>`);
+  s += `<text x="${sx(0)}" y="142" font-size="12" fill="#475467">← nada de ansiedad</text><text x="${sx(1)}" y="142" font-size="12" text-anchor="end" fill="#475467">mucha ansiedad →</text>`;
+  el.innerHTML = svgWrap(h, s, "Barra apilada de la ansiedad con la línea del 50 %");
+  const cat = pos => { let a = 0; for (let i = 0; i < c.length; i++) { a += c[i]; if (pos <= a) return lab[i]; } };
+  const p1 = n % 2 ? (n + 1) / 2 : n / 2, p2 = n % 2 ? p1 : n / 2 + 1, m1 = cat(p1), m2c = cat(p2);
+  const mx = Math.max(...c), modas = lab.filter((_, i) => c[i] === mx);
+  const medTxt = m1 === m2c ? `<strong>Mediana: «${m1}».</strong> Con ${n} personas en fila, ${n % 2 ? `la del medio es la n.º ${p1}` : `las del medio son la n.º ${p1} y la n.º ${p2}`}, y ${n % 2 ? "está" : "están"} en «${m1}».`
+    : `<strong>Mediana: entre «${m1}» y «${m2c}».</strong> Las dos personas del medio (n.º ${p1} y ${p2}) caen en categorías distintas.`;
+  $("#m2OrdTxt").innerHTML = `<p>${medTxt} <strong>Moda:</strong> «${modas.join("» y «")}» (${mx} personas).</p><p class="nota">Con categorías no se puede calcular la media: no podemos sumar «poco» + «mucho». La mediana sí funciona porque solo necesita poder ordenar.</p>`;
+}
+
+/* ---------------- Misión 3 ---------------- */
+const m3Vars = ["horas_movil_dia", "horas_sueno", "minutos_trayecto", "cafes_semana", "horas_gaming_sem"];
+$("#m3Var").innerHTML = m3Vars.map(v => `<option value="${v}">${CUANTI[v].et}</option>`).join("");
+function m3(reset) {
+  const v = $("#m3Var").value, a = D[v];
+  if (reset) $("#m3Val").value = Math.round(median(a));
+  const tu = parseFloat(String($("#m3Val").value).replace(",", "."));
+  cajas($("#m3Box"), { "": a }, CUANTI[v].et, isFinite(tu) ? tu : null);
+  $("#m3Cuart").innerHTML = `<strong>Q1 (P25)</strong> = ${fmt(quantile(a, .25), 1)} · <strong>Q2 (P50)</strong> = ${fmt(quantile(a, .5), 1)} · <strong>Q3 (P75)</strong> = ${fmt(quantile(a, .75), 1)}`;
+  if (isFinite(tu)) { const pr = Math.round(100 * a.filter(x => x <= tu).length / a.length);
+    $("#m3Texto").innerHTML = `<div class="fb fb-sol"><strong>Estás aproximadamente en el percentil ${pr}</strong><br>Con ${fmt(tu, 1)} ${CUANTI[v].ud}, tu valor es igual o superior al de aproximadamente el ${pr} % de la clase.</div>`; }
+  else $("#m3Texto").innerHTML = "";
+}
+$("#m3Var").addEventListener("change", () => m3(true)); $("#m3Val").addEventListener("input", () => m3(false));
+
+/* ---------------- Misión 4 ---------------- */
+const INI = [2, 3, 3, 3, 3, 4];
+$("#m4Inputs").innerHTML = INI.map((v, i) => `<label>Amigo ${i + 1}<input type="text" inputmode="decimal" value="${v}" data-i="${i}" inputmode="decimal"></label>`).join("");
+document.querySelectorAll("#m4Inputs input, input[name=m4Reto]").forEach(el => el.addEventListener("input", m4));
+document.querySelectorAll("input[name=m4Reto]").forEach(el => el.addEventListener("change", m4));
+function m4() {
+  const x = [...document.querySelectorAll("#m4Inputs input")].map(i => parseFloat(i.value.replace(",", ".")));
+  if (x.some(v => !isFinite(v))) { $("#m4Estado").innerHTML = `<div class="fb fb-pista">Rellena los seis valores.</div>`; return; }
+  const m = mean(x), s = sdPob(x), r = Math.max(...x) - Math.min(...x), reto = document.querySelector("input[name=m4Reto]:checked").value;
+  puntos($("#m4Plot"), x, 0, Math.max(8, Math.max(...x)), "Horas en redes ayer", false);
+  $("#m4Tabla").innerHTML = `<table class="t"><tr><th>Media</th><th>Rango</th><th>Varianza (fórmula de clase)</th><th>DT (fórmula de clase)</th><th>DT (la que da SPSS/jamovi)</th></tr><tr><td>${fmt(m)}</td><td>${fmt(r)}</td><td>${fmt(s * s)}</td><td>${fmt(s)}</td><td>${fmt(sdMue(x))}</td></tr></table>`;
+  const m3ok = Math.abs(m - 3) < .005;
+  const cond = { r1: m3ok && s < .005, r2: m3ok && s > 2.5, r3: m3ok && Math.abs(r - 6) < .005 && s < 1.8 }[reto];
+  const pista = { r1: "Si todos tienen exactamente el mismo valor, nadie se aleja de la media.", r2: "Lleva a la mitad del grupo a un extremo y a la otra mitad al otro, manteniendo la suma en 18.", r3: "Pon un 0 y un 6 para fijar el rango; el resto, lo más cerca posible de la media." }[reto];
+  $("#m4Estado").innerHTML = cond ? `<div class="fb fb-ok"><strong>¡Reto conseguido!</strong> Prueba el siguiente o explica a tu compañera o compañero por qué funciona.</div>`
+    : `<div class="fb fb-pista"><strong>Aún no.</strong> ${m3ok ? "" : `La media es ${fmt(m)}; la suma debe ser 18. `}<em>Pista:</em> ${pista}</div>`;
+}
+
+/* ---------------- Misión 5 ---------------- */
+function m5Reveal() {
+  const md = median(D.gasto_festivales);
+  $("#m5Reveal").innerHTML = `<p>La media del gasto en festivales es <strong>${fmt(V.mediaFest, 0)} €</strong>, pero la mediana es <strong>${fmt(md, 0)} €</strong>. Solo el <strong>${fmt(V.pctSobre, 0)} %</strong> de la clase gastó más que la media.</p>` +
+    (prediccion === null ? `<p class="nota">No guardaste ninguna predicción en Inicio. ¿Qué habrías dicho?</p>` : `<p>Tu predicción fue <strong>${prediccion} %</strong>. ${Math.abs(prediccion - V.pctSobre) <= 8 ? "¡Muy cerca!" : "Mucha gente responde «50 %» porque confunde la media con la mediana."}</p>`);
+  histograma($("#m5Fest"), D.gasto_festivales, 20, CUANTI.gasto_festivales.et);
+}
+const DESC = {
+  gasto_festivales: "Mucha gente gasta poco (o una sola entrada) y unas pocas personas van a todos los festivales del verano.",
+  nota_pau: "Nota de admisión de quienes han entrado en Psicología: hay una nota de corte y el máximo es 14.",
+  horas_sueno: "Horas de sueño entre semana: la mayoría duerme alrededor de 7 h.",
+  horas_gaming_sem: "Horas de videojuegos a la semana: bastantes personas no juegan nada y unas pocas juegan muchísimo.",
+  minutos_trayecto: "Minutos de trayecto a la universidad: casi nadie tarda menos de 15 min; algunas personas vienen desde muy lejos."
+};
+$("#m5Var").innerHTML = Object.keys(DESC).map(v => `<option value="${v}">${CUANTI[v].et}</option>`).join("");
+function m5Reset() { $("#m5Desc").textContent = DESC[$("#m5Var").value]; $("#m5HistBox").classList.add("oculto"); $("#m5Res").innerHTML = ""; document.querySelectorAll("input[name=m5Pred]").forEach(r => r.checked = false); }
+$("#m5Var").addEventListener("change", m5Reset);
+$("#m5Revelar").addEventListener("click", () => {
+  const pred = document.querySelector("input[name=m5Pred]:checked")?.value;
+  if (!pred) { $("#m5Res").innerHTML = `<div class="fb fb-pista">Primero haz tu predicción.</div>`; return; }
+  const a = D[$("#m5Var").value], g1 = asimetria(a), g2 = curtosis(a), real = g1 > .5 ? "pos" : g1 < -.5 ? "neg" : "sim";
+  const nom = { pos: "positiva", sim: "aproximadamente simétrica", neg: "negativa" }, ok = pred === real;
+  $("#m5Res").innerHTML = `<div class="fb ${ok ? "fb-ok" : "fb-no"}"><strong>${ok ? "Bien predicho." : "Tu predicción no coincide."}</strong> Asimetría = ${fmt(g1)} → ${nom[real]}. Exceso de curtosis = ${fmt(g2)}. Media = ${fmt(mean(a), 1)}; mediana = ${fmt(median(a), 1)}.${ok ? "" : " Recuerda: el signo lo marca la cola (el lado largo y poco poblado), no el lado donde se amontonan los datos."}</div>`;
+  $("#m5HistBox").classList.remove("oculto"); m5Hist();
+});
+function m5Hist() { const b = +$("#m5Bins").value; $("#m5BinsVal").textContent = b; histograma($("#m5Hist"), D[$("#m5Var").value], b, CUANTI[$("#m5Var").value].et); }
+$("#m5Bins").addEventListener("input", m5Hist);
+function m5Normal() {
+  const x = +$("#m5X").value; $("#m5XVal").textContent = x; ancho($("#m5Normal"));
+  const h = 230, x0 = 20, x1 = W - 20, yb = 175, sx = v => x0 + (v - 15) / 70 * (x1 - x0), dn = v => Math.exp(-(((v - 50) / 10) ** 2) / 2), sy = v => yb - dn(v) * 150;
+  let pts = [], area = [`${sx(15)},${yb}`];
+  for (let v = 15; v <= 85.01; v += .5) { pts.push(`${sx(v)},${sy(v)}`); if (v <= x) area.push(`${sx(v)},${sy(v)}`); }
+  area.push(`${sx(x)},${sy(x)}`, `${sx(x)},${yb}`);
+  let s = `<polygon points="${area.join(" ")}" fill="#c9daee"/><polyline points="${pts.join(" ")}" fill="none" stroke="#003865" stroke-width="2.5"/>`;
+  s += `<line x1="${sx(50)}" x2="${sx(50)}" y1="${yb}" y2="${sy(50)}" stroke="#667085" stroke-dasharray="3 4"/><line x1="${sx(x)}" x2="${sx(x)}" y1="${yb}" y2="${sy(x) - 10}" stroke="#b42318" stroke-width="2.5"/>`;
+  [30, 40, 50, 60, 70].forEach(t => s += `<line x1="${sx(t)}" x2="${sx(t)}" y1="${yb}" y2="${yb + 5}" stroke="#98a2b3"/><text x="${sx(t)}" y="${yb + 19}" font-size="13" text-anchor="middle" fill="#475467">${t}</text>`);
+  s += `<line x1="${x0}" x2="${x1}" y1="${yb}" y2="${yb}" stroke="#98a2b3"/><text x="${W / 2}" y="${yb + 40}" font-size="13.5" text-anchor="middle">Puntuación en atención</text>`;
+  $("#m5Normal").innerHTML = svgWrap(h, s, "Curva normal con el área por debajo de la puntuación elegida");
+  const z = (x - 50) / 10, pc = 100 * pnorm(z);
+  $("#m5Z").innerHTML = `<strong>z</strong> = (${x} − 50) / 10 = ${fmt(z)} · <strong>Área sombreada:</strong> ≈ ${fmt(pc, 1)} % puntúa igual o menos (percentil ≈ ${Math.round(pc)}).`;
+}
+$("#m5X").addEventListener("input", m5Normal);
+
+/* ---------------- Misión 6 ---------------- */
+function m6() {
+  const t = $("#m6Tipo").value, el = $("#m6Plot");
+  if (t === "barras") barras(el, NIVELES.red_favorita, contar("red_favorita", NIVELES.red_favorita), "Red social favorita");
+  if (t === "hist") histograma(el, D.horas_sueno, 12, "Horas de sueño entre semana", false);
+  if (t === "caja") cajas(el, { "Previa: sí": D.horas_movil_dia.filter((_, i) => D.hace_previa[i] === "Sí"), "Previa: no": D.horas_movil_dia.filter((_, i) => D.hace_previa[i] === "No") }, "Horas de móvil al día");
+  if (t === "disp") dispersion(el, D.horas_movil_dia, D.horas_sueno, "Horas de móvil al día", "Horas de sueño");
+}
+$("#m6Tipo").addEventListener("change", m6);
+let eje = "trunc";
+$("#m6Eje").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; eje = b.dataset.eje; [...$("#m6Eje").children].forEach(x => x.setAttribute("aria-selected", x === b)); m6Trampa(); });
+function m6Trampa() {
+  ancho($("#m6Trampa")); const v = [["Psicología", 62], ["ADE", 58]], h = 260, x0 = 60, y0 = 34, y1 = 220, lo = eje === "trunc" ? 56 : 0, hi = eje === "trunc" ? 63 : 100, sy = val => y1 - (val - lo) / (hi - lo) * (y1 - y0);
+  let s = `<text x="${W / 2}" y="20" font-size="16" font-weight="700" text-anchor="middle" fill="#1d2939">${eje === "trunc" ? "¡Psicología arrasa!" : "Los mismos datos, eje desde 0"}</text><line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#98a2b3"/>`;
+  (eje === "trunc" ? [56, 57, 58, 59, 60, 61, 62, 63] : [0, 20, 40, 60, 80, 100]).forEach(t => s += `<text x="${x0 - 8}" y="${sy(t) + 4}" font-size="12.5" text-anchor="end" fill="#475467">${t} %</text>`);
+  v.forEach(([l, val], i) => { const bw = (W - x0 - 20) / 2, x = x0 + bw * (i + .2), w = bw * .6; s += `<rect x="${x}" y="${sy(val)}" width="${w}" height="${y1 - sy(val)}" fill="${i ? "#98a2b3" : "#003865"}"/><text x="${x + w / 2}" y="${y1 + 20}" font-size="14" text-anchor="middle">${l}</text><text x="${x + w / 2}" y="${sy(val) - 6}" font-size="13" text-anchor="middle">${val} %</text>`; });
+  s += `<line x1="${x0}" x2="${W - 10}" y1="${y1}" y2="${y1}" stroke="#98a2b3"/>`;
+  $("#m6Trampa").innerHTML = svgWrap(h, s, "Gráfico de barras sobre asistencia a festivales");
+}
+
+/* ---------------- Reto final ---------------- */
+$("#rfModelo").addEventListener("click", () => {
+  if ($("#rfTexto").value.trim().length < 30) { $("#rfModeloTxt").innerHTML = `<div class="fb fb-pista"><strong>Escribe primero tu explicación</strong> (al menos un par de frases). Generar tu respuesta antes de leer el modelo es lo que te ayuda a aprender.</div>`; return; }
+  $("#rfModeloTxt").innerHTML = `<div class="fb fb-sol"><strong>Respuesta modelo:</strong> la distribución es muy asimétrica positiva: 11 de 15 personas (73 %) no gastaron nada y una sola gastó 400 €. La media (29 €) está inflada por ese caso y no representa a nadie. Daría la mediana (0 €), el rango (0-400 €) o los cuartiles, y el porcentaje que apostó algo (27 %). No borraría el caso de 400 €: es un dato real y relevante, quizá un indicio de un patrón de riesgo.<br><em>Compara: ¿mencionaste la forma, una medida robusta y qué hacer con el valor extremo?</em></div>`;
+});
+
+/* ---------------- Cierre: calibración ---------------- */
+function pintarCalibracion() {
+  const el = $("#calib");
+  if (!registro.length) { el.innerHTML = "<p>Aún no has respondido preguntas. Vuelve aquí al terminar las misiones.</p>"; return; }
+  const niveles = ["Seguro/a", "Dudo", "Adivino"], ac = registro.filter(r => r.acierto).length;
+  let h = `<p>Has respondido ${registro.length} preguntas y acertaste ${ac} al primer intento (${fmt(100 * ac / registro.length, 0)} %).</p><table class="t"><tr><th>Seguridad</th><th>Acierto al 1.er intento</th><th>Fallo</th></tr>`;
+  niveles.forEach(n => h += `<tr><td>${n}</td><td>${registro.filter(r => r.confianza === n && r.acierto).length}</td><td>${registro.filter(r => r.confianza === n && !r.acierto).length}</td></tr>`);
+  h += "</table>";
+  const sf = registro.filter(r => r.confianza === "Seguro/a" && !r.acierto);
+  h += sf.length ? `<div class="fb fb-pista"><strong>Estabas segura/o pero fallaste en:</strong><ul>${sf.map(r => `<li>${esc(r.mision)}: ${esc(r.texto.slice(0, 90))}${r.texto.length > 90 ? "…" : ""}</li>`).join("")}</ul>Son las ideas que más conviene repasar: creías dominarlas.</div>`
+    : `<div class="fb fb-ok">No hay fallos con alta seguridad: tu confianza está bien calibrada en lo que has respondido.</div>`;
+  el.innerHTML = h + `<p class="nota">Esta información no sale de tu navegador y se borra al cerrar la página.</p>`;
+}
+
+/* ---------------- Repaso espaciado ---------------- */
+const BANCO = [
+  ["Número de hermanos: ¿qué tipo de variable es?", ["Nominal", "Ordinal", "Cuantitativa discreta", "Cuantitativa continua"], 2, "Se cuenta (0, 1, 2…): cuantitativa discreta."],
+  ["Seguidores en Instagram de 5 amigas: 150, 200, 210, 300 y 48.000. ¿Qué medida resume mejor a la amiga típica?", ["Media", "Mediana", "Varianza"], 1, "La mediana (210) no se ve arrastrada por la cuenta de 48.000 seguidores."],
+  ["Si la asimetría es positiva, normalmente…", ["Media < mediana", "Media > mediana", "Media = mediana"], 1, "La cola a la derecha arrastra la media hacia valores altos."],
+  ["Estar en el P25 de horas de sueño significa…", ["Dormir el 25 % de la noche", "Que ≈25 % duerme igual o menos que tú", "Que ≈25 % duerme más que tú"], 1, "El P25 deja aproximadamente el 25 % de los casos en ese valor o por debajo."],
+  ["Dos grupos con media de 3 h de redes. A: DT = 0,6 h; B: DT = 2,2 h. ¿Qué grupo es más homogéneo?", ["A", "B", "Iguales"], 0, "Menor DT = datos más agrupados alrededor de la media."],
+  ["Con M = 100 y DT = 15, una puntuación de 130 tiene z =", ["1", "2", "30"], 1, "z = (130 − 100) / 15 = 2."],
+  ["¿Qué gráfico NO es adecuado para «artista favorito»?", ["Barras", "Sectores con pocas categorías", "Histograma"], 2, "El histograma requiere una variable cuantitativa."],
+  ["SPSS da una DT algo mayor que la calculada en clase dividiendo entre N. ¿Por qué?", ["Error del programa", "SPSS divide entre n − 1 (DT muestral)", "SPSS redondea"], 1, "El software calcula la DT muestral dividiendo entre n − 1."],
+  ["¿Cuándo tiene sentido la frecuencia acumulada?", ["Siempre", "Con variables ordinales o cuantitativas", "Solo con nominales"], 1, "Acumular exige un orden entre categorías."],
+  ["Exceso de curtosis = +3 indica…", ["Colas más pesadas que la normal", "Distribución simétrica", "Cola a la izquierda"], 0, "Curtosis positiva: leptocúrtica, más peso de valores extremos."],
+  ["«El 60 % de las chicas de la clase tiene pareja». ¿Qué falta para interpretarlo bien?", ["Nada", "El n del grupo y con qué se compara", "La media de edad"], 1, "Un porcentaje sin el n (¿10 chicas o 900?) y sin referencia es difícil de interpretar."],
+  ["En una tabla Sexo (columnas) × Tiene pareja (filas), ¿qué % compara mujeres y hombres?", ["% por fila", "% por columna", "% del total"], 1, "Se calcula dentro de cada grupo que se compara: aquí, por columna."]
+];
+let repI = Math.floor(Math.random() * BANCO.length);
+function repPintar() { const [q, ops] = BANCO[repI]; $("#repQ").innerHTML = `<div class="q"><fieldset><legend>${esc(q)}</legend>${ops.map((o, i) => `<label class="op"><input type="radio" name="rep" value="${i}"> ${esc(o)}</label>`).join("")}</fieldset></div>`; $("#repFb").innerHTML = ""; }
+$("#repCheck").addEventListener("click", () => { const s = document.querySelector("input[name=rep]:checked"), [, , c, e] = BANCO[repI];
+  $("#repFb").innerHTML = !s ? `<div class="fb fb-pista">Elige una respuesta.</div>` : +s.value === c ? `<div class="fb fb-ok"><strong>Correcto.</strong> ${e}</div>` : `<div class="fb fb-no"><strong>Todavía no.</strong> ${e}</div>`; });
+$("#repOtra").addEventListener("click", () => { let k; do { k = Math.floor(Math.random() * BANCO.length); } while (k === repI); repI = k; repPintar(); });
+
+/* ---------------- Descarga CSV ---------------- */
+$("#descarga").addEventListener("click", () => {
+  const cols = Object.keys(D), q = v => typeof v === "string" ? `"${v.replace(/"/g, '""')}"` : v;
+  const csv = [cols.join(",")].concat(D.id.map((_, i) => cols.map(c => q(D[c][i])).join(","))).join("\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" })); a.download = "encuesta_genz_simulada.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+/* ---------------- Dibujo inicial ---------------- */
+function dibujarVisibles() { if (!listo) return; m1Tabla(); m1Conting(); m2Ej(); m2Ex(); m2(); m2Sesgo(); m2Moda(); m2Ord(); m3(!$("#m3Val").value); m4(); m5Reveal(); m6(); m6Trampa(); m5Normal(); }
+listo = true; let rT; window.addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { dibujarVisibles(); const r = document.querySelector("#m5HistBox:not(.oculto)"); if (r) m5Hist(); }, 150); }); m5Reset(); repPintar(); ir("inicio");
+</script>
+</body>
+</html>
